@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "Pengiriman" ALTER COLUMN "jemput" DROP DEFAULT,
+ALTER COLUMN "tujuan" DROP DEFAULT;
