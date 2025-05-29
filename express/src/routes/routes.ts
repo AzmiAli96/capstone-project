@@ -17,7 +17,7 @@ router.get("/", (req, res) => {
 });
 
 // Router untuk wilayah 
-router.get('/wilayah', AllWilayahController);
+router.get('/wilayah', AllWilayahController);   
 router.get('/wilayah/:id', getWilayahByIdController);
 router.post('/wilayah', createWilayahController);
 router.put('/wilayah/:id', updateWilayahController);

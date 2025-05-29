@@ -2,6 +2,7 @@ import axiosInstance from '@/lib/axiosInstance';
 import { XMarkIcon } from '@heroicons/react/24/outline';
 import axios from 'axios';
 import { useState, useEffect } from 'react';
+import Select from 'react-select';
 
 interface ModalProps {
     isOpen: boolean;
@@ -177,7 +178,7 @@ export default function OrderForm({
         }
 
         const isBeratValidForJemput = Number(berat) >= 500;
-        
+
         const basePayload = {
             no_spb,
             customer,
@@ -273,6 +274,15 @@ export default function OrderForm({
         }
     };
 
+    // pencarian wilayah
+    const wilayahOptions = wilayahList.map((wilayah: any) => ({
+        value: wilayah.id,
+        label: wilayah.wilayah
+    }));
+    const handleWilayahChange = (selectedOption: any) => {
+        setSelectedWilayah(selectedOption ? selectedOption.value : "");
+    };
+
     return (
         <Modal isOpen={isOpen} onClose={onClose}>
             <form className="grid grid-cols-1 gap-4" onSubmit={handleSubmit}>
@@ -328,20 +338,15 @@ export default function OrderForm({
 
                 <div className="grid grid-cols-2 items-center gap-4">
                     <label className="text-gray-700 dark:text-gray-300">Tujuan</label>
-                    <select
-                        value={selectedWilayah}
-                        onChange={(e) => setSelectedWilayah(e.target.value)}
-                        className={`border rounded px-2 py-1 text-gray-900 dark:bg-gray-800 dark:text-white 
-                            ${errors.selectedWilayah ? "border-red-500" : "dark:border-gray-700"
-                            }`}
-                    >
-                        <option value="">Pilih tujuan</option>
-                        {Array.isArray(wilayahList) && wilayahList.map((wilayah: any) => (
-                            <option key={wilayah.id} value={wilayah.id}>
-                                {wilayah.wilayah}
-                            </option>
-                        ))}
-                    </select>
+                    <Select
+                        options={wilayahOptions}
+                        value={wilayahOptions.find(option => option.value === Number(selectedWilayah))}
+                        onChange={handleWilayahChange}
+                        placeholder="Pilih tujuan"
+                        isClearable
+                        className="text-black w-full"
+                        classNamePrefix="react-select"
+                    />
                 </div>
 
                 <div className="grid grid-cols-2 items-center gap-4">

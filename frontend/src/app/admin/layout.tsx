@@ -2,8 +2,8 @@
 
 import { ReactNode } from "react";
 import { SidebarProvider } from "@/context/SidebarContext";
-import Header from "@/components/Staff/header";
-import Sidebar from "@/components/Admin/Sidebar";
+import LayoutSidebar from "@/components/Context/LayoutSidebar";
+import LayoutHeader from "@/components/Context/header/index";
 
 interface LayoutProps {
   children: ReactNode;
@@ -14,11 +14,11 @@ const Layout = ({ children }: LayoutProps) => {
     <SidebarProvider>
       <div className="flex h-screen bg-gray-50 dark:bg-gray-900">
         {/* Sidebar Component */}
-        <Sidebar />
+        <LayoutSidebar />
         
         {/* Right Content Area (Header + Main) */}
         <div className="flex flex-col flex-1">
-          <Header />
+          <LayoutHeader />
           <main className="flex-1 overflow-auto p-6 bg-white dark:bg-gray-800">
             {children}
           </main>
