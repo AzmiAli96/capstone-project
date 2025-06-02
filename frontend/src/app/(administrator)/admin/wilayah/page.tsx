@@ -5,7 +5,7 @@ export default function WilayahPage() {
     
     return (
         <div className="space-y-6">
-            <ComponentCard title="User">
+            <ComponentCard title="Wilayah Tujuan">
                 <Wilayah />
             </ComponentCard>
         </div>

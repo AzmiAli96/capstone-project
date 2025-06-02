@@ -51,11 +51,6 @@ const navItems: NavItem[] = [
         path: "/staff/payment",
     },
     {
-        name: "Laporan",
-        icon: <PresentationChartBarIcon className="h-5 w-5" />,
-        path: "/staff/laporan",
-    },
-    {
         icon: <UsersIcon className="h-5 w-5" />,
         name: "User",
         path: "/admin/user"
@@ -73,7 +68,7 @@ const navItems: NavItem[] = [
     {
         name: "Laporan",
         icon: <PresentationChartBarIcon className="h-5 w-5" />,
-        path: "/admin/laporan"
+        path: "/laporan"
     },
 ];
 

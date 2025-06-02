@@ -1,12 +1,12 @@
-import Cost from "@/components/Admin/Ongkos";
 import ComponentCard from "@/components/Common/ComponentCard";
+import Laporan from "@/components/Laporan";
 
-export default function CostPage() {
+export default function LaporanPage() {
     
     return (
         <div className="space-y-6">
-            <ComponentCard title="User">
-                <Cost />
+            <ComponentCard title="Laporan Keuangan">
+                <Laporan />
             </ComponentCard>
         </div>
     );

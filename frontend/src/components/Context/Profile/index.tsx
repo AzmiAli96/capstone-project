@@ -7,7 +7,7 @@ import { FormEvent } from "react";
 import { CircleUserRound } from "lucide-react";
 import Toast from "@/components/Toast";
 
-export default function ProfileStaff() {
+export default function ProfileAdministrator() {
     const [userId, setUserId] = useState<number | null>(null);
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");

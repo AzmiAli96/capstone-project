@@ -63,7 +63,7 @@ export default function OrderForm({
     const [berat, setBerat] = useState<number | "">("");
     const [koli, setKoli] = useState("");
     const isJemputEnabled = typeof berat === 'number' && berat > 500;
-    const [pembayaran, setPembayaran] = useState("cash");
+    const [pembayaran, setPembayaran] = useState("kredit");
     const [jemput, setJemput] = useState("");
     const [tujuan, setTujuan] = useState("");
     const [ket, setKet] = useState("");
@@ -112,7 +112,7 @@ export default function OrderForm({
             if (mode === "edit" && existingOrder) {
                 setBerat(existingOrder.berat || "");
                 setKoli(existingOrder.koli || "");
-                setPembayaran(existingOrder.pembayaran || "cash");
+                setPembayaran(existingOrder.pembayaran || "kredit");
                 setJemput(existingOrder.jemput || "");
                 setTujuan(existingOrder.tujuan || "");
                 setKet(existingOrder.ket || "");
@@ -126,7 +126,7 @@ export default function OrderForm({
                 // reset form
                 setBerat("");
                 setKoli("");
-                setPembayaran("cash");
+                setPembayaran("kredit");
                 setTujuan("");
                 setJemput("");
                 setKet("");
@@ -412,21 +412,21 @@ export default function OrderForm({
                             <input
                                 type="radio"
                                 name="pembayaran"
-                                value="cash"
-                                checked={pembayaran === "cash"}
-                                onChange={() => setPembayaran("cash")}
+                                value="kredit"
+                                checked={pembayaran === "kredit"}
+                                onChange={() => setPembayaran("kredit")}
                             />
-                            Cash
+                            Kredit
                         </label>
                         <label className="flex items-center gap-2">
                             <input
                                 type="radio"
                                 name="pembayaran"
-                                value="credit"
-                                checked={pembayaran === "credit"}
-                                onChange={() => setPembayaran("credit")}
+                                value="debit"
+                                checked={pembayaran === "debit"}
+                                onChange={() => setPembayaran("debit")}
                             />
-                            Credit
+                            Debit
                         </label>
                     </div>
                 </div>

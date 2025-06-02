@@ -165,21 +165,12 @@ export default function Order() {
           isOpen={isModalOpen}
           onClose={closeModal}
           currentUserId={currentUserId}
-          mode="create" // opsional, default-nya create
+          mode="create" 
           onAddOrder={(order: any) => {
             setItems((prev) => [...prev, order]);
             setToast({ type: "success", message: "Order berhasil ditambahkan." });
           }}
         />
-        {/* <OrderForm
-          isOpen={isModalOpen}
-          onClose={closeModal}
-          currentUserId={currentUserId}
-          onAddOrder={(order: any) => {
-            setItems((prev) => [...prev, order]);
-            setToast({ type: "success", message: "Order berhasil ditambahkan." });
-          }}
-        /> */}
       </div>
 
       {/* Table */}

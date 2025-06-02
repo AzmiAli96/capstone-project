@@ -19,50 +19,22 @@ export default function Payment() {
     const [page, setPage] = useState(1);
     const [perPage] = useState(10);
     const [total, setTotal] = useState(0);
+    const [userId, setUserId] = useState<number | null>(null);
     const [isStatusInfoOpen, setIsStatusInfoOpen] = useState<boolean>(false);
     const [selectedStatusId, setSelectedStatusId] = useState<string | null>(null);
     const [toast, setToast] = useState<{ type: "success" | "error" | "warning"; message: string } | null>(null);
 
-    useEffect(() => {
-        const fetchUserAndData = async () => {
-            try {
-                const res = await axios.get("/api/getUser");
-                const userId = res.data.user.id;
-
-                const statusRes = await axiosInstance.get("http://localhost:2000/status", {
-                    params: {
-                        search: searchQuery,
-                        page,
-                        perPage,
-                    },
-                    headers: {
-                        "x-user-id": userId, // opsional jika backend butuh
-                    },
-                    withCredentials: true,
-                });
-
-                setItems(statusRes.data.data);
-                setTotal(statusRes.data.total);
-            } catch (error) {
-                console.error("Error:", error);
-                setToast({ type: "error", message: "Gagal memuat data." });
-            }
-        };
-
-        fetchUserAndData();
-    }, [page, searchQuery]);
-
-    const fetchStatus = async () => {
+    const fetchStatus = async (userId: number) => {
         try {
             const response = await axiosInstance.get("http://localhost:2000/status", {
                 params: {
                     search: searchQuery,
                     page,
                     perPage,
+                    userOnly: true,
                 },
                 withCredentials: true,
             });
-
             setItems(response.data.data);
             setTotal(response.data.total);
         } catch (error) {
@@ -72,14 +44,27 @@ export default function Payment() {
     };
 
     useEffect(() => {
-        fetchStatus();
+        const fetchUserAndStatus = async () => {
+            try {
+                const res = await axios.get("/api/getUser");
+                const uid = res.data.user.id;
+                setUserId(uid);
+                await fetchStatus(uid);
+            } catch (error) {
+                console.error("Error:", error);
+                setToast({ type: "error", message: "Gagal memuat data." });
+            }
+        };
+
+        fetchUserAndStatus();
     }, [page, searchQuery]);
 
-    //Search
     const handleSearch = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setPage(1);
-        fetchStatus();
+        if (userId) {
+            await fetchStatus(userId);
+        }
     };
 
     // Update
