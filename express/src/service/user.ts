@@ -1,4 +1,4 @@
-import { deleteUser, findUser, findUserById, loginUser, registerUser, updateUser, updateUserImage } from "../repository/user"
+import { deleteUser, findUser, findUserByEmail, findUserById, loginUser, registerUser, updateUser, updateUserImage } from "../repository/user"
 import bcrypt from 'bcrypt';
 import { userData } from "../types/user";
 import { response } from "express";
@@ -9,10 +9,16 @@ import fs from "fs";
 
 
 export const createUser = async (item: userData) => {
+    // cek user dengan email yang sama
+    const existingUser = await findUserByEmail(item.email);
+    if (existingUser) {
+        // lempar error supaya controller bisa catch
+        throw new Error("Email sudah terdaftar");
+    }
 
     const user = await registerUser(item);
     return user;
-}
+};
 
 export const useUser = async (item: userData) => {
     const user = await loginUser(item);

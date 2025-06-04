@@ -1,7 +1,7 @@
 // layer untuk handle request dan response
 
 import express, { Request, Response } from 'express';
-import { createOngkos, deleteOngkosById, getAllOngkos, getOngkosById, updateOngkosById } from '../service/cost'; // mengambil prismaclient dari folder db
+import { createOngkos, deleteOngkosById, getAllOngkos, getOngkosById, updateOngkosById } from '../service/cost'; 
 
 const router = express.Router();
 

@@ -11,12 +11,16 @@ export const RegisterController = async (req: Request, res: Response) => {
     const item = req.body;
     const user = await createUser(item);
 
-    res.send({
+    res.status(201).send({
       data: user,
       message: "Register Success",
     });
   } catch (error: any) {
-    res.status(400).send(error.message);
+    // Jika error message "Email sudah terdaftar", kembalikan status 409
+    if (error.message === "Email sudah terdaftar") {
+      return res.status(409).json({ message: error.message });
+    }
+    res.status(400).json({ message: error.message || "Bad Request" });
   }
 };
 
@@ -26,12 +30,12 @@ export const LoginController = async (req: Request, res: Response) => {
     const item = req.body;
     const { user, token } = await useUser(item);
 
-    // ⬇️ Kirim token sebagai HTTP-only cookie
+    // Mengirim token sebagai HTTP-only cookie
     res.cookie("token", token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "strict",
-      maxAge: 60 * 60 * 1000, // 1 jam
+      maxAge: 60 * 60 * 1000,
     });
 
     res.status(200).json({
@@ -48,10 +52,7 @@ export const checkAuthController = async (req: Request, res: Response) => {
   const validationRequest = req as any;
   const userData = validationRequest.userData;
 
-  // Get complete user data from database if needed
   try {
-    // Optional: Get fresh user data from database
-    // const user = await getUserById(userData.id);
 
     res.status(200).json({
       user: userData,

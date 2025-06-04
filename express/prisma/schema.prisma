@@ -50,6 +50,7 @@ model Pengiriman {
   tujuan     String
   customer   String?
   no_spb     String?  @unique @db.VarChar(10)
+  prioritas  String
   ongkos     Ongkos?  @relation(fields: [id_ongkos], references: [id])
   user       User     @relation(fields: [id_user], references: [id])
   wilayah    Wilayah  @relation(fields: [id_wilayah], references: [id])

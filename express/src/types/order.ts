@@ -10,6 +10,7 @@ export interface orderData {
     ket: string;
     image: string;
     tanggal: string | Date;
+    prioritas: string;
     id_user?: number;
     id_wilayah: number;
     id_ongkos?: number;

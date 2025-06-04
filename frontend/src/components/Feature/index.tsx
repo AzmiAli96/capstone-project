@@ -70,10 +70,12 @@ const SectionHeader = ({
 const Feature = () => {
   const headerInfo = {
     title: "Layanan Pengiriman Cargo Terpercaya",
-    subtitle: "Cepat, Aman, dan Handal",
-    description: `Perusahaan ini merupakan penyedia layanan pengiriman barang cargo yang berfokus pada rute pengiriman 
-    dari Jakarta ke berbagai daerah di Pulau Sumatera. Dengan komitmen terhadap kecepatan, keamanan, dan keandalan layanan, 
-    kami memastikan setiap pengiriman tiba tepat waktu dan dalam kondisi terbaik.`,
+    subtitle: "Cepat, Murah, Aman, dan Handal",
+    description: `Nikmati pengiriman barang yang mudah ke seluruh Indonesia dengan bantuan kami.  
+    Kami mengerti betapa pentingnya setiap kiriman Anda untuk keperluan pribadi dan bisnis.  
+    Kami hadir untuk memastikan barang Anda tiba tepat waktu dan dalam kondisi terbaik dengan layanan yang cepat, harga bersahabat, 
+    dan sistem pengiriman yang aman dan terpercaya.  Kami siap menjadi mitra pengiriman andalan Anda setiap saat, 
+    didukung oleh jaringan luas dan tim profesional kami.  Pilih layanan kami untuk kenyamanan dan kepercayaan.`,
   };
 
   return (

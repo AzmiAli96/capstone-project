@@ -8,10 +8,10 @@ const Hero = () => {
         {/* Left: Text */}
         <div className="w-full md:w-1/2 text-center md:text-left relative  z-10">
           <h1 className="text-4xl font-extrabold text-black leading-tight mb-4 ml-12">
-            CV Gemilang Cargo Express
+            Gemilang Cargo Express
           </h1>
           <p className="text-gray-700 text-base  ml-12">
-          Perusahaan ini merupakan penyedia layanan pengiriman barang cargo yang melayani rute dari Jakarta ke berbagai daerah di Pulau Sumatera dengan cepat, aman, dan terpercaya 
+            Perusahaan ini merupakan penyedia layanan pengiriman barang cargo yang melayani rute dari Jakarta ke berbagai daerah di Pulau Sumatera dengan cepat, murah, aman, dan terpercaya
           </p>
         </div>
 
@@ -23,11 +23,11 @@ const Hero = () => {
 
           {/* Truck image */}
           <Image
-            src="/images/delivery_car.png" 
+            src="/images/delivery_car.png"
             alt="Truck"
             width={400}
             height={400}
-            className="relative z-10"
+            className="h-auto relative z-10"
           />
         </div>
       </div>

@@ -1,18 +1,23 @@
-"use client"
-import React, { useState } from 'react';
-import styles from "../css/Login.module.css"
+"use client";
+import React from "react";
+import styles from "../css/Login.module.css";
+import { useRegister } from "./useRegister";
 
 const RegisterForm = () => {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [alamat, setAlamat] = useState("");
-  const [nohp, setNohp] = useState("");
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log({ name, alamat, nohp, email, password });
-  };
+  const {
+    name,
+    setName,
+    email,
+    setEmail,
+    password,
+    setPassword,
+    alamat,
+    setAlamat,
+    nohp,
+    setNohp,
+    error,
+    handleSubmit,
+  } = useRegister();
 
   return (
     <div className={styles.container}>
@@ -59,6 +64,9 @@ const RegisterForm = () => {
             onChange={(e) => setNohp(e.target.value)}
             required
           />
+
+          {error && <p style={{ color: "red", marginTop: "10px" }}>{error}</p>}
+
           <div className={styles.actions}>
             <a href="/auth/login" className={styles.link}>
               Login
@@ -74,4 +82,3 @@ const RegisterForm = () => {
 };
 
 export default RegisterForm;
-

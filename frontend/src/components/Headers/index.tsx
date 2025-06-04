@@ -31,6 +31,7 @@ const Header = () => {
                             src="/images/namaLogo.png"
                             alt="Logo"
                             fill
+                            sizes="180px"
                             className="object-contain"
                             priority
                         />
@@ -60,8 +61,8 @@ const Header = () => {
                             href={item.path || "#"}
                             target={item.newTab ? "_blank" : "_self"}
                             className={`text-base font-medium ${pathUrl === item.path
-                                    ? "text-blue-600"
-                                    : "text-gray-600 hover:text-blue-600"
+                                ? "text-blue-600"
+                                : "text-gray-600 hover:text-blue-600"
                                 }`}
                         >
                             {item.title}
@@ -92,8 +93,8 @@ const Header = () => {
                             href={item.path || "#"}
                             target={item.newTab ? "_blank" : "_self"}
                             className={`text-base font-medium ${pathUrl === item.path
-                                    ? "text-blue-600"
-                                    : "text-gray-600 hover:text-blue-600"
+                                ? "text-blue-600"
+                                : "text-gray-600 hover:text-blue-600"
                                 }`}
                         >
                             {item.title}
