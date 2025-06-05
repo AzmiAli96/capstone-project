@@ -16,7 +16,6 @@ export default function Order() {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [items, setItems] = useState<any[]>([]);
   const [selectedOrder, setSelectedOrder] = useState(null);
-  const [modalOpen, setModalOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [page, setPage] = useState(1);
   const [perPage] = useState(10);

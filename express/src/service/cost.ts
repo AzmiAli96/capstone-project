@@ -2,13 +2,22 @@
 
 
 import { response } from "express";
-import { deleteOngkos, editOngkos, findOngkos, findOngkosById, insertOngkos } from "../repository/cost";
+import { countOngkos, deleteOngkos, editOngkos, findOngkos, findOngkosById, insertOngkos } from "../repository/cost";
 import { OngkosData } from "../types/cost";
 
 export const getAllOngkos = async (search: string, page: number, perPage: number) => {
     const skip = (page - 1) * perPage;
-    const ongkos = await findOngkos(search, skip, perPage);
-    return ongkos;
+    const [data, total] = await Promise.all([
+        findOngkos(search, skip, perPage),
+        countOngkos(search),
+    ]);
+    return {
+        data,
+        total,
+        page,
+        perPage,
+        totalPages: Math.ceil(total / perPage),
+    };
 };
 
 export const getOngkosById = async (itemId: number) => {

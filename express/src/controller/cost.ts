@@ -1,12 +1,12 @@
 // layer untuk handle request dan response
 
 import express, { Request, Response } from 'express';
-import { createOngkos, deleteOngkosById, getAllOngkos, getOngkosById, updateOngkosById } from '../service/cost'; 
+import { createOngkos, deleteOngkosById, getAllOngkos, getOngkosById, updateOngkosById } from '../service/cost';
 
 const router = express.Router();
 
 // Menampilkan Data
-export const AllCostController =  async (req: Request, res: Response) => {
+export const AllCostController = async (req: Request, res: Response) => {
     try {
         const search = req.query.search?.toString() || "";
         const page = parseInt(req.query.page as string) || 1;
@@ -14,7 +14,7 @@ export const AllCostController =  async (req: Request, res: Response) => {
 
         const ongkos = await getAllOngkos(search, page, perPage);
 
-        res.send({ data: ongkos, });
+        res.send(ongkos);
     } catch (error: any) {
         res.status(400).send(error.message);
     }

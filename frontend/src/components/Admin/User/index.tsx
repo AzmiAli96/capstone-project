@@ -6,6 +6,7 @@ import InputUserForm from "./input";
 import UpdateUserForm from "./update";
 import Toast from "@/components/Toast";
 import axiosInstance from "@/lib/axiosInstance";
+import { SquarePenIcon, Trash, Trash2 } from "lucide-react";
 
 export default function User() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -14,7 +15,7 @@ export default function User() {
   const [modalOpen, setModalOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [page, setPage] = useState(1);
-  const [perPage] = useState(10); // Bisa diganti dropdown jika mau
+  const [perPage] = useState(5); // Bisa diganti dropdown jika mau
   const [total, setTotal] = useState(0);
   const [toast, setToast] = useState<{ type: "success" | "error" | "warning"; message: string } | null>(null);
 
@@ -161,7 +162,7 @@ export default function User() {
                         className="bg-green-600 hover:bg-blue-700 text-white hover:underline py-1 px-3 rounded"
                         onClick={() => handleEditClick(item)}
                       >
-                        Edit
+                        <SquarePenIcon/>
                       </button>
                       <button
                         className="ml-2 bg-red-600 text-white text-white py-1 px-3 rounded hover:underline"
@@ -171,7 +172,7 @@ export default function User() {
                           }
                         }}
                       >
-                        Hapus
+                        <Trash2/>
                       </button>
                     </TableCell>
                   </TableRow>

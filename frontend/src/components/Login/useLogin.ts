@@ -1,8 +1,6 @@
 "use client"
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { cookies } from "next/headers";
-import jsCookie from "js-cookie";
 
 export const useLogin = () => {
   const router = useRouter();
@@ -40,6 +38,9 @@ export const useLogin = () => {
         } else {
           setError("Role tidak dikenali");
         }
+      } else {
+        const errorData = await response.json();
+        setError(errorData.message || "Login gagal");
       }
     } catch (error) {
       setError("Gagal terhubung ke server");

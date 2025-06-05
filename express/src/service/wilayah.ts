@@ -2,13 +2,23 @@
 
 
 import { response } from "express";
-import { deleteWilayah, editWilayah, findWilayah, findWilayahById, insertWilayah } from "../repository/wilayah";
+import { countAllWilayah, countWilayah, deleteWilayah, editWilayah, findWilayah, findWilayahById, insertWilayah } from "../repository/wilayah";
 import { WilayahData } from "../types/wilayah";
 
 export const getAllWilayah = async (search: string, page: number, perPage: number) => {
     const skip = (page - 1) * perPage;
-    const wilayah = await findWilayah(search, skip, perPage);
-    return wilayah;
+
+    const [data, total] = await Promise.all([
+        findWilayah(search, skip, perPage),
+        countWilayah(search),
+    ]);
+    return {
+        data,
+        total,
+        page,
+        perPage,
+        totalPages: Math.ceil(total / perPage),
+    };
 };
 
 export const getWilayahById = async (itemId: number) => {
@@ -33,3 +43,7 @@ export const deleteWilayahById = async (itemId: number) => {
     const wilayah = await deleteWilayah(itemId);
     return wilayah;
 }
+
+export const getTotalWilayah = async () => {
+  return countAllWilayah();
+};

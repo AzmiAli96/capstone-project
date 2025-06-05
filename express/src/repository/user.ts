@@ -106,3 +106,10 @@ export const updateUserImage = async (id: number, imagePath: string) => {
         data: { image: imagePath },
     });
 };
+
+export const countCustomerUsers = async (): Promise<number> => {
+  const count = await prisma.user.count({
+    where: { role: "customer" },
+  });
+  return count;
+};

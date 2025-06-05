@@ -1,7 +1,7 @@
 // layer untuk handle request dan response
 
 import express, { Request, Response } from 'express';
-import { createWilayah, deleteWilayahById, getAllWilayah, getWilayahById, updateWilayahById } from '../service/wilayah'; // mengambil prismaclient dari folder db
+import { createWilayah, deleteWilayahById, getAllWilayah, getTotalWilayah, getWilayahById, updateWilayahById } from '../service/wilayah'; // mengambil prismaclient dari folder db
 
 const router = express.Router();
 
@@ -14,7 +14,7 @@ export const AllWilayahController = async (req: Request, res: Response) => {
 
         const wilayah = await getAllWilayah(search, page, perPage);
 
-        res.send({data: wilayah,});
+        res.send( wilayah );
     } catch (error: any) {
         res.status(400).send(error.message);
     }
@@ -85,6 +85,15 @@ export const deleteWilayahController = async (req: Request, res: Response) => {
     } catch (error: any) {
         res.status(400).send(error.message);
     }
+};
+
+export const WilayahCountController = async (req: Request, res: Response) => {
+  try {
+    const count = await getTotalWilayah();
+    res.send({ count });
+  } catch (error: any) {
+    res.status(400).send({ message: error.message });
+  }
 };
 
 export default router;

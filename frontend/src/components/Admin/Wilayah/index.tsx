@@ -6,6 +6,7 @@ import UpdateWilayahForm from "./update";
 import Toast from "@/components/Toast";
 import axiosInstance from "@/lib/axiosInstance";
 import InputWilayahForm from "./input";
+import { SquarePen, Trash2 } from "lucide-react";
 
 export default function Wilayah() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -157,7 +158,7 @@ export default function Wilayah() {
                         className="bg-green-600 hover:bg-blue-700 text-white hover:underline py-1 px-3 rounded"
                         onClick={() => handleEditClick(item)}
                       >
-                        Edit
+                        <SquarePen/>
                       </button>
                       <button
                         className="ml-2 bg-red-600 text-white text-white py-1 px-3 rounded hover:underline"
@@ -167,7 +168,7 @@ export default function Wilayah() {
                           }
                         }}
                       >
-                        Hapus
+                        <Trash2/>
                       </button>
                     </TableCell>
                   </TableRow>
@@ -177,6 +178,8 @@ export default function Wilayah() {
           </div>
         </div>
       </div>
+      
+      {/* paginatipn */}
       <nav aria-label="Page navigation" className="flex justify-center mt-6">
         <ul className="inline-flex -space-x-px text-sm">
           <li>

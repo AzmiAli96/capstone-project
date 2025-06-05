@@ -1,4 +1,4 @@
-import { deleteUser, findUser, findUserByEmail, findUserById, loginUser, registerUser, updateUser, updateUserImage } from "../repository/user"
+import { countCustomerUsers, deleteUser, findUser, findUserByEmail, findUserById, loginUser, registerUser, updateUser, updateUserImage } from "../repository/user"
 import bcrypt from 'bcrypt';
 import { userData } from "../types/user";
 import { response } from "express";
@@ -24,13 +24,13 @@ export const useUser = async (item: userData) => {
     const user = await loginUser(item);
 
     if (!user) {
-        throw new Error("User not found");
+        throw new Error("Email tidak terdaftar, silahkan register terlebuh dahulu");
     }
 
     const isPasswordValid = await bcrypt.compare(item.password, user.password);
 
     if (!isPasswordValid) {
-        throw new Error("Wrong password");
+        throw new Error("Password Salah");
     }
 
     const payload = {
@@ -103,4 +103,9 @@ export const handleImageUpload = async (
     }
 
     return { imagePath };
+};
+
+export const getCustomerUserCount = async (): Promise<number> => {
+  const count = await countCustomerUsers();
+  return count;
 };

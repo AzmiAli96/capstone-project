@@ -1,3 +1,4 @@
+import Toast from '@/components/Toast';
 import axiosInstance from '@/lib/axiosInstance';
 import { XMarkIcon } from '@heroicons/react/24/outline';
 import { useState, useEffect, FormEvent } from 'react';
@@ -59,9 +60,18 @@ export default function InputWilayahForm({ isOpen, onClose, onAddWilayah, }: { i
     const [provinsi, setProvinsi] = useState("");
     const [wilayah, setWilayah] = useState("");
     const [harga, setHarga] = useState("");
+    const [toast, setToast] = useState<{ type: "success" | "error" | "warning"; message: string } | null>(null);
 
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        if (!provinsi || !wilayah || !harga) {
+            setToast({
+                type: "error",
+                message: "Harap isi semua field sebelum submit.",
+            });
+            return;
+        }
+
         try {
             const newWilayah = {
                 provinsi,
@@ -87,6 +97,7 @@ export default function InputWilayahForm({ isOpen, onClose, onAddWilayah, }: { i
 
     return (
         <Modal isOpen={isOpen} onClose={onClose}>
+            {toast && <Toast type={toast.type} message={toast.message} onClose={() => setToast(null)} />}
             <form className="grid grid-cols-1 gap-4" onSubmit={handleSubmit}>
                 <div className="grid grid-cols-2 items-center gap-4">
                     <label className="text-gray-700 dark:text-gray-300">Provinsi</label>

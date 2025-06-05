@@ -1,11 +1,32 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { InboxStackIcon, UsersIcon } from "@heroicons/react/24/outline";
+import { Box } from "lucide-react";
 
 export const EcommerceMetrics = () => {
+  const [customerCount, setCustomerCount] = useState<number | null>(null);
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    const fetchCustomerCount = async () => {
+      try {
+        const res = await fetch("http://localhost:2000/user/count-customer", {
+          credentials: "include", // Kirim cookie secara otomatis
+        });
+        if (!res.ok) throw new Error("Gagal mengambil jumlah customer");
+
+        const json = await res.json();
+        setCustomerCount(json.count);
+      } catch (err: any) {
+        setError(err.message || "Error loading data");
+      }
+    };
+
+    fetchCustomerCount();
+  }, []);
+
   return (
     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-6">
-      {/* <!-- Metric Item Start --> */}
       <div className="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] md:p-6">
         <div className="flex items-center justify-center w-12 h-12 bg-gray-100 rounded-xl dark:bg-gray-800">
           <UsersIcon className="text-gray-800 size-6 dark:text-white/90" />
@@ -17,7 +38,13 @@ export const EcommerceMetrics = () => {
               Customers
             </span>
             <h4 className="mt-2 font-bold text-gray-800 text-title-sm dark:text-white/90">
-              3,782
+              {error ? (
+                <span className="text-red-500">{error}</span>
+              ) : customerCount === null ? (
+                "Loading..."
+              ) : (
+                customerCount.toLocaleString()
+              )}
             </h4>
           </div>
         </div>
@@ -27,7 +54,7 @@ export const EcommerceMetrics = () => {
       {/* <!-- Metric Item Start --> */}
       <div className="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] md:p-6">
         <div className="flex items-center justify-center w-12 h-12 bg-gray-100 rounded-xl dark:bg-gray-800">
-          <InboxStackIcon className="text-gray-800 dark:text-white/90" />
+          <Box className="text-gray-800 dark:text-white/90" />
         </div>
         <div className="flex items-end justify-between mt-5">
           <div>

@@ -146,7 +146,7 @@ export default function Cost() {
                   <TableRow key={item.id} className="hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200">
                     <TableCell>{index + 1}</TableCell>
                     <TableCell>{item.jemput}</TableCell>
-                    <TableCell>{item.harga}</TableCell>
+                    <TableCell>Rp {new Intl.NumberFormat('id-ID').format(item.harga)}</TableCell>
                     <TableCell>
                       <button
                         className="bg-green-600 hover:bg-blue-700 text-white hover:underline py-1 px-3 rounded"

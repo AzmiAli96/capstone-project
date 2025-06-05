@@ -17,6 +17,17 @@ export const findWilayah = async (search: string, skip: number, take: number) =>
     return wilayah;
 }
 
+export const countWilayah = async (search: string) => {
+    return prisma.wilayah.count({
+        where: {
+            OR: [
+                { provinsi: { contains: search, mode: "insensitive" } },
+                { wilayah: { contains: search, mode: "insensitive" } },
+            ],
+        }
+    });
+}
+
 export const findWilayahById = async (itemId: number) => {
     const wilayah = await prisma.wilayah.findUnique({
         where: {
@@ -32,7 +43,7 @@ export const insertWilayah = async (item: WilayahData) => {
         data: {
             provinsi: item.provinsi,
             wilayah: item.wilayah,
-            harga: item.harga,  
+            harga: item.harga,
         },
     });
     return wilayah;
@@ -44,7 +55,7 @@ export const editWilayah = async (itemId: number, item: WilayahData) => {
         data: {
             provinsi: item.provinsi,
             wilayah: item.wilayah,
-            harga: item.harga, 
+            harga: item.harga,
         },
     });
     return wilayah;
@@ -57,3 +68,7 @@ export const deleteWilayah = async (itemId: number) => {
         },
     });
 }
+
+export const countAllWilayah = async () => {
+  return prisma.wilayah.count(); 
+};

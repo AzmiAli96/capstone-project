@@ -16,6 +16,17 @@ export const findOngkos = async (search: string, skip: number, take: number) => 
     return ongkos;
 }
 
+export const countOngkos = async (search: string) => {
+    const ongkos = await prisma.ongkos.count({
+        where: {
+            OR: [
+                { jemput: { contains: search, mode: "insensitive" } },
+            ],
+        }
+    });
+    return ongkos;
+}
+
 export const findOngkosById = async (itemId: number) => {
     const ongkos = await prisma.ongkos.findUnique({
         where: {

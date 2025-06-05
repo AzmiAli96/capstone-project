@@ -1,5 +1,5 @@
 import express, { NextFunction, Request, Response } from 'express';
-import { createUser, deleteUserById, getAllUser, getUserById, handleImageUpload, updateUserService, useUser } from '../service/user';
+import { createUser, deleteUserById, getAllUser, getCustomerUserCount, getUserById, handleImageUpload, updateUserService, useUser } from '../service/user';
 import jwt from "jsonwebtoken";
 import { accessValidation, roleAuthorization } from '../middleware/authmiddleware';
 
@@ -135,6 +135,15 @@ export const uploadImage = async (req: Request, res: Response) => {
   } catch (error: any) {
     console.error("Error:", error);
     return res.status(500).json({ error: `Terjadi kesalahan: ${error.message}` });
+  }
+};
+
+export const getCustomerUserCountController = async (req: Request, res: Response) => {
+  try {
+    const count = await getCustomerUserCount();
+    res.json({ count });
+  } catch (error: any) {
+    res.status(500).json({ message: "Error fetching customer count" });
   }
 };
 

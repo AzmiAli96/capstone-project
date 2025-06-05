@@ -1,6 +1,6 @@
 import express from "express";
-import { AllWilayahController, createWilayahController, deleteWilayahController, getWilayahByIdController, updateWilayahController } from '../controller/wilayah';
-import { checkAuthController, deleteUserController, getAllUserController, getUserByIdController, LoginController, LogoutController, RegisterController, updateUserController, uploadImage } from "../controller/user";
+import { AllWilayahController, createWilayahController, deleteWilayahController, getWilayahByIdController, updateWilayahController, WilayahCountController } from '../controller/wilayah';
+import { checkAuthController, deleteUserController, getAllUserController, getCustomerUserCountController, getUserByIdController, LoginController, LogoutController, RegisterController, updateUserController, uploadImage } from "../controller/user";
 import { createOrderController, deleteOrderController, OrderByIdController, OrderController, updateOrderController, uploadImageOrder } from "../controller/order";
 import { StatusByIdController, StatusController, updateStatusController, uploadImageStatus } from "../controller/status";
 import { AllCostController, CostByIdController, createCostController, deleteCostController, updateCostController } from "../controller/cost";
@@ -19,6 +19,7 @@ router.get("/", (req, res) => {
 
 // Router untuk wilayah 
 router.get('/wilayah', AllWilayahController);   
+router.get('/wilayah/count', WilayahCountController);   
 router.get('/wilayah/:id', getWilayahByIdController);
 router.post('/wilayah', createWilayahController);
 router.put('/wilayah/:id', updateWilayahController);
@@ -40,6 +41,7 @@ router.post('/logout', LogoutController);
 // Router untuk user 
 router.get('/check-auth', accessValidation, checkAuthController);
 router.get("/user/", accessValidation, roleAuthorization("admin"), getAllUserController);
+router.get("/user/count-customer", accessValidation, getCustomerUserCountController);
 router.get("/user/:id", accessValidation, getUserByIdController);
 router.put("/user/:id", accessValidation, updateUserController);
 router.delete("/user/:id", accessValidation, deleteUserController);

@@ -1,3 +1,4 @@
+import Toast from '@/components/Toast';
 import axiosInstance from '@/lib/axiosInstance';
 import { XMarkIcon } from '@heroicons/react/24/outline';
 import { useState, useEffect, FormEvent } from 'react';
@@ -62,40 +63,46 @@ export default function InputUserForm({ isOpen, onClose, onAddUser, }: { isOpen:
     const [alamat, setAlamat] = useState("");
     const [no_hp, setNo_hp] = useState("");
     const [role, setRole] = useState("");
+    const [toast, setToast] = useState<{ type: "success" | "error" | "warning"; message: string } | null>(null);
 
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        try {
-            const newUser = {
-                name,
-                email,
-                password,
-                alamat,
-                no_hp,
-                role
-            };
-            const response = await axiosInstance.post("http://localhost:2000/user/register", newUser, {
-                headers: { "Content-Type": "application/json" },
-            });
-            console.log(response.data);
 
-            setName("");
-            setEmail("");
-            setPassword("");
-            setAlamat("");
-            setNo_hp("");
-            setRole("");
+        // Cek apakah semua field terisi
+        if (!name || !email || !password || !alamat || !no_hp || !role) {
+            setToast({
+                type: "error",
+                message: "Harap isi semua field sebelum submit.",
+            });
+            return;
+        }
+
+        try {
+            const newUser = { name, email, password, alamat, no_hp, role };
+            const response = await axiosInstance.post(
+                "http://localhost:2000/user/register",
+                newUser,
+                { headers: { "Content-Type": "application/json" } }
+            );
+
+            // Reset field dan toast
+            setName(""); setEmail(""); setPassword(""); setAlamat(""); setNo_hp(""); setRole("");
+            setToast({ type: "success", message: "User berhasil ditambahkan." });
 
             onAddUser(response.data);
             onClose();
-            console.log("User berhasil ditambahkan:", response.data);
         } catch (error) {
-            console.error("Gagal menagmbil data pengeluaran", error);
+            console.error("Gagal menambahkan user", error);
+            setToast({ type: "error", message: "Terjadi kesalahan saat menambahkan user." });
         }
-    }
+    };
+
+
 
     return (
         <Modal isOpen={isOpen} onClose={onClose}>
+            {toast && <Toast type={toast.type} message={toast.message} onClose={() => setToast(null)} />}
+
             <form className="grid grid-cols-1 gap-4" onSubmit={handleSubmit}>
                 <div className="grid grid-cols-2 items-center gap-4">
                     <label className="text-gray-700 dark:text-gray-300">Name</label>
