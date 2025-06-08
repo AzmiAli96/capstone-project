@@ -36,6 +36,8 @@ model Ongkos {
 
 model Pengiriman {
   id         Int      @id @default(autoincrement())
+  no_spb     String?  @unique @db.VarChar(10)
+  customer   String?
   berat      Int
   koli       Int
   pembayaran String
@@ -48,8 +50,6 @@ model Pengiriman {
   id_ongkos  Int?
   jemput     String?
   tujuan     String
-  customer   String?
-  no_spb     String?  @unique @db.VarChar(10)
   prioritas  String
   ongkos     Ongkos?  @relation(fields: [id_ongkos], references: [id])
   user       User     @relation(fields: [id_user], references: [id])
@@ -62,6 +62,7 @@ model Status {
   image         String?
   spembayaran   String
   spengiriman   String
+  tanggal       DateTime   @default(now())
   id_pengiriman Int
   laporan       Laporan[]
   pengiriman    Pengiriman @relation(fields: [id_pengiriman], references: [id])

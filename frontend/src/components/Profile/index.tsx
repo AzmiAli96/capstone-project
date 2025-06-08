@@ -5,6 +5,7 @@ import axiosInstance from "@/lib/axiosInstance";
 import axios from "axios";
 import { FormEvent } from "react";
 import { CircleUserRound } from "lucide-react";
+import Toast from "../Toast";
 
 export default function Profile() {
   const [userId, setUserId] = useState<number | null>(null);
@@ -16,6 +17,7 @@ export default function Profile() {
   const [role, setRole] = useState("");
   const [image, setImage] = useState("");
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [toast, setToast] = useState<{ type: "success" | "error" | "warning"; message: string } | null>(null);
 
   // Ambil data user dari API Next.js
   useEffect(() => {
@@ -60,12 +62,12 @@ export default function Profile() {
         console.log("Uploaded image path:", result.data);
         return result.data; // path gambar
       } else {
-        alert(`Upload gagal: ${result.error}`);
+        setToast({ type: "error", message: `Upload gagal: ${result.error}` });
         return null;
       }
     } catch (error) {
       console.error("Upload error:", error);
-      alert("Terjadi kesalahan saat upload.");
+      setToast({ type: "error", message: "Terjadi kesalahan saat upload." });
       return null;
     }
   };
@@ -102,10 +104,12 @@ export default function Profile() {
       });
 
       console.log("User berhasil diperbarui:", response.data);
-      alert("Profil berhasil diperbarui!");
+      setToast({ type: "success", message: "Profil berhasil diperbarui!" });
+
     } catch (error) {
       console.error("Gagal memperbarui user:", error);
-      alert("Gagal memperbarui profil.");
+      setToast({ type: "error", message: "Gagal memperbarui profil." });
+
     }
   };
 
@@ -213,6 +217,8 @@ export default function Profile() {
           </div>
         </div>
       </form>
+      {toast && <Toast type={toast.type} message={toast.message} onClose={() => setToast(null)} />}
+
     </div>
   );
 }

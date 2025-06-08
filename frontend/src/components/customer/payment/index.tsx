@@ -5,7 +5,7 @@ import { MagnifyingGlassCircleIcon } from "@heroicons/react/24/outline";
 import Toast from "@/components/Toast";
 import axiosInstance from "@/lib/axiosInstance";
 import Badge from "@/components/ui/badge";
-import { Info, RefreshCw } from "lucide-react";
+import { HandCoins, Info, RefreshCw } from "lucide-react";
 import Link from "next/link";
 import axios from "axios";
 import UpdateStatusForm from "./update";
@@ -197,10 +197,10 @@ export default function Payment() {
 
                                                 <TableCell>
                                                     <button
-                                                        className="bg-green-600 hover:bg-blue-700 text-white hover:underline py-1 px-3 rounded"
+                                                        className="bg-green-600 text-white hover:underline py-1 px-3 rounded"
                                                         onClick={() => handleEditClick(item)}
                                                     >
-                                                        <RefreshCw size={20} />
+                                                        <HandCoins size={20} />
                                                     </button>
                                                     <button
                                                         className="ml-2 bg-blue-600 text-white text-white py-1 px-3 rounded hover:underline"

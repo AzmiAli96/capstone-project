@@ -7,7 +7,9 @@ export const LaporanController = async (req: Request, res: Response) => {
         const page = parseInt(req.query.page as string) || 1;
         const perPage = parseInt(req.query.perPage as string) || 10;
 
-        const laporan = await getAllLaporan(search, page, perPage);
+        const userId = (req as any).user?.id || null; // pastikan token decode menyimpan id di req.user
+
+        const laporan = await getAllLaporan(search, page, perPage, userId);
 
         res.send(laporan);
     } catch (error: any) {

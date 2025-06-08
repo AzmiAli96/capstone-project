@@ -7,6 +7,8 @@ export const findStatus = async (search: string, skip: number, take: number, use
             { spembayaran: { contains: search, mode: "insensitive" } },
             { spengiriman: { contains: search, mode: "insensitive" } },
             { pengiriman: { no_spb: { contains: search, mode: "insensitive" } } },
+            { pengiriman: { customer: { contains: search, mode: "insensitive" } } },
+            { pengiriman: { tujuan: { contains: search, mode: "insensitive" } } },
             { pengiriman: { user: { name: { contains: search, mode: "insensitive" } } } },
         ],
     };
@@ -32,6 +34,8 @@ export const countStatus = async (search: string, userId: number | null) => {
             { spembayaran: { contains: search, mode: "insensitive" } },
             { spengiriman: { contains: search, mode: "insensitive" } },
             { pengiriman: { no_spb: { contains: search, mode: "insensitive" } } },
+            { pengiriman: { customer: { contains: search, mode: "insensitive" } } },
+            { pengiriman: { tujuan: { contains: search, mode: "insensitive" } } },
             { pengiriman: { user: { name: { contains: search, mode: "insensitive" } } } },
         ],
     };

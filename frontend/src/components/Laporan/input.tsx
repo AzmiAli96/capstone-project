@@ -122,7 +122,7 @@ export default function LaporanForm({
         <Modal isOpen={isOpen} onClose={onClose}>
             <form className="grid grid-cols-1 gap-4" onSubmit={handleSubmit}>
                 <div className="grid grid-cols-2 items-center gap-4">
-                    <label className="text-gray-700 dark:text-gray-300">Nama Customer</label>
+                    <label className="text-gray-700 dark:text-gray-300">Tanggal Laporan</label>
                     <input
                         type="date"
                         value={tanggal}
@@ -131,7 +131,7 @@ export default function LaporanForm({
                     />
                 </div>
                 <div className="grid grid-cols-2 items-center gap-4">
-                    <label className="text-gray-700 dark:text-gray-300">Nama Customer</label>
+                    <label className="text-gray-700 dark:text-gray-300">BB</label>
                     <input
                         type="text"
                         value={bb}

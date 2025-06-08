@@ -4,11 +4,10 @@ import { Table, TableBody, TableCell, TableHeader, TableRow } from "@/components
 import { MagnifyingGlassCircleIcon } from "@heroicons/react/24/outline";
 import Toast from "@/components/Toast";
 import axiosInstance from "@/lib/axiosInstance";
-import InputOrderForm from "./input";
 import OrderForm from "./input";
-import { parseJwt } from "@/utils/auth";
 import { Info, RefreshCw, Trash2 } from "lucide-react";
 import OrderInfo from "./info";
+import Badge from "@/components/ui/badge";
 // import UpdateOrderForm from "./update";
 
 export default function Order() {
@@ -60,7 +59,7 @@ export default function Order() {
       try {
         const res = await fetch("/api/getUser", {
           method: "GET",
-          credentials: "include", // penting agar cookie dikirim
+          credentials: "include",
         });
 
         const data = await res.json();
@@ -102,8 +101,6 @@ export default function Order() {
 
   const handleCloseOrderInfo = () => {
     setIsOrderInfoOpen(false);
-    // Optionally reset the selectedOrderId when modal closes
-    // setSelectedOrderId(null);
   };
 
   const closeToast = () => setToast(null);
@@ -129,7 +126,18 @@ export default function Order() {
     }
   };
 
-
+  const getPrioritasColor = (order: string) => {
+    switch (order) {
+      case "Tinggi":
+        return "error";
+      case "Sedang":
+        return "warning";
+      case "Rendah":
+        return "primary";
+      default:
+        return "light";
+    }
+  };
 
   return (
     <>
@@ -164,7 +172,7 @@ export default function Order() {
           isOpen={isModalOpen}
           onClose={closeModal}
           currentUserId={currentUserId}
-          mode="create" 
+          mode="create"
           onAddOrder={(order: any) => {
             setItems((prev) => [...prev, order]);
             setToast({ type: "success", message: "Order berhasil ditambahkan." });
@@ -187,6 +195,7 @@ export default function Order() {
                   <TableCell isHeader>Pembayaran</TableCell>
                   <TableCell isHeader>Tanggal</TableCell>
                   <TableCell isHeader>Total</TableCell>
+                  <TableCell isHeader>Prioritas</TableCell>
                   <TableCell isHeader>Action</TableCell>
                 </TableRow>
               </TableHeader>
@@ -207,6 +216,11 @@ export default function Order() {
                       year: "numeric",
                     })}</TableCell>
                     <TableCell>Rp {new Intl.NumberFormat('id-ID').format(item.total)}</TableCell>
+                    <TableCell>
+                      <Badge color={getPrioritasColor(item.prioritas)} variant="light">
+                        {item.prioritas}
+                      </Badge>
+                    </TableCell>
                     <TableCell>
                       <button
                         className="bg-green-600 hover:bg-blue-700 text-white hover:underline py-1 px-3 rounded"

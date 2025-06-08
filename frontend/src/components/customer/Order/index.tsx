@@ -3,19 +3,21 @@ import axiosInstance from '@/lib/axiosInstance';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import Toast from "@/components/Toast";
+import Select from 'react-select';
 
 export default function OrderForm() {
   const [berat, setBerat] = useState<number | "">("");
   const [koli, setKoli] = useState("");
   const isJemputEnabled = typeof berat === 'number' && berat > 500;
-  const [pembayaran, setPembayaran] = useState("cash"); // Default to cash
+  const [pembayaran, setPembayaran] = useState("kredit");
   const [jemput, setJemput] = useState("");
   const [tujuan, setTujuan] = useState("");
   const [ket, setKet] = useState("");
   const [image, setImage] = useState("");
   const [customer, setCustomer] = useState("");
-  const [no_spb, setNo_spb] = useState("");
   const [currentUserId, setCurrentUserId] = useState<number | null>(null);
+  const [totalHarga, setTotalHarga] = useState<number>(0);
+
 
   // State for the data lists
   const [wilayahList, setWilayahList] = useState<any[]>([]);
@@ -31,7 +33,7 @@ export default function OrderForm() {
   useEffect(() => {
     axiosInstance.get("/wilayah")
       .then((res) => {
-        console.log("Data wilayah:", res.data.data); 
+        console.log("Data wilayah:", res.data.data);
         setWilayahList(res.data.data);
       })
       .catch((err) => {
@@ -42,7 +44,7 @@ export default function OrderForm() {
   // Fetch cost data
   useEffect(() => {
     axiosInstance.get("/cost").then((res) => {
-      console.log("Data Cost:", res.data.data); 
+      console.log("Data Cost:", res.data.data);
       setOngkosList(res.data.data);
     })
       .catch((err) => {
@@ -56,7 +58,7 @@ export default function OrderForm() {
         const res = await fetch("/api/getUser");
         const data = await res.json();
         if (data?.user?.id) {
-          setCurrentUserId(data.user.id); 
+          setCurrentUserId(data.user.id);
           console.log("User login ID:", data.user.id);
         } else {
           console.warn("User ID tidak ditemukan dalam token.");
@@ -70,10 +72,9 @@ export default function OrderForm() {
   }, []);
 
   useEffect(() => {
-    setNo_spb("customer");
     setBerat("");
     setKoli("");
-    setPembayaran("cash");
+    setPembayaran("kredit");
     setTujuan("");
     setJemput("");
     setKet("");
@@ -82,15 +83,6 @@ export default function OrderForm() {
     setSelectedWilayah("");
     setSelectedOngkos("");
   }, []);
-
-  // console.log("Mengirim order dengan data:", {
-  //   berat,
-  //   koli,
-  //   pembayaran,
-  //   id_ongkos: selectedOngkos,
-  //   id_wilayah: selectedWilayah,
-  //   id_user: currentUserId
-  // });
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -144,7 +136,7 @@ export default function OrderForm() {
   const resetForm = () => {
     setBerat("");
     setKoli("");
-    setPembayaran("cash");
+    setPembayaran("kredit");
     setJemput("");
     setTujuan("");
     setKet("");
@@ -163,7 +155,7 @@ export default function OrderForm() {
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       setSelectedFile(e.target.files[0]);
-      setImage(e.target.files[0].name); 
+      setImage(e.target.files[0].name);
     }
   };
 
@@ -184,7 +176,7 @@ export default function OrderForm() {
 
       if (response.ok) {
         console.log("Uploaded image path:", result.data);
-        setImage(result.data); 
+        setImage(result.data);
       } else {
         alert(`Upload gagal: ${result.error}`);
       }
@@ -193,6 +185,38 @@ export default function OrderForm() {
       console.error("Upload error:", error);
       alert("Terjadi kesalahan saat upload.");
     }
+  };
+
+  // Menampilkan Harga
+  useEffect(() => {
+    if (berat && selectedWilayah !== "") {
+      const wilayah = wilayahList.find(w => w.id === Number(selectedWilayah));
+      if (!wilayah) return;
+
+      let total = Number(berat) * Number(wilayah.harga);
+
+      // Jika berat >= 500 dan ada ongkos
+      if (Number(berat) >= 500 && selectedOngkos !== "") {
+        const ongkos = ongkosList.find(o => o.id === Number(selectedOngkos));
+        if (ongkos) {
+          total += Number(ongkos.harga);
+        }
+      }
+
+      setTotalHarga(total);
+    } else {
+      setTotalHarga(0);
+    }
+  }, [berat, selectedWilayah, selectedOngkos, ongkosList, wilayahList]);
+
+
+  // pencarian wilayah
+  const wilayahOptions = wilayahList.map((wilayah: any) => ({
+    value: wilayah.id,
+    label: wilayah.wilayah
+  }));
+  const handleWilayahChange = (selectedOption: any) => {
+    setSelectedWilayah(selectedOption ? selectedOption.value : "");
   };
 
   return (
@@ -215,6 +239,7 @@ export default function OrderForm() {
               value={customer}
               onChange={(e) => setCustomer(e.target.value)}
               className="border rounded px-2 py-1 text-gray-900 dark:bg-gray-800 dark:text-white dark:border-gray-700"
+              placeholder='Nama Penerima'
             />
           </div>
 
@@ -228,6 +253,7 @@ export default function OrderForm() {
                 setBerat(e.target.value === "" ? "" : Number(e.target.value))
               }
               required
+              placeholder='Berapa KG'
             />
           </div>
 
@@ -239,22 +265,21 @@ export default function OrderForm() {
               onChange={(e) => setKoli(e.target.value)}
               className="border rounded px-2 py-1 text-gray-900 dark:bg-gray-800 dark:text-white dark:border-gray-700"
               required
+              placeholder='Jumlah Barang'
             />
           </div>
 
           <div className="grid grid-cols-2 items-center gap-4">
             <label className="text-gray-700 dark:text-gray-300">Tujuan</label>
-            <select
-              value={selectedWilayah}
-              onChange={(e) => setSelectedWilayah(e.target.value)}
-            >
-              <option value="">Pilih tujuan</option>
-              {Array.isArray(wilayahList) && wilayahList.map((wilayah: any) => (
-                <option key={wilayah.id} value={wilayah.id}>
-                  {wilayah.wilayah}
-                </option>
-              ))}
-            </select>
+            <Select
+              options={wilayahOptions}
+              value={wilayahOptions.find(option => option.value === Number(selectedWilayah))}
+              onChange={handleWilayahChange}
+              placeholder="Pilih tujuan"
+              isClearable
+              className="text-black w-full"
+              classNamePrefix="react-select"
+            />
           </div>
 
           <div className="grid grid-cols-2 items-center gap-4">
@@ -265,6 +290,7 @@ export default function OrderForm() {
               onChange={(e) => setTujuan(e.target.value)}
               className="border rounded px-2 py-1 text-gray-900 dark:bg-gray-800 dark:text-white dark:border-gray-700"
               required
+              placeholder='Nama Jalan, Nomor, Kota'
             />
           </div>
 
@@ -306,6 +332,7 @@ export default function OrderForm() {
               className="border rounded px-2 py-1 text-gray-900 dark:bg-gray-800 dark:text-white dark:border-gray-700"
               disabled={!isJemputEnabled}
               required={isJemputEnabled}
+              placeholder='Nama Jalan, Nomor, Kota'
             />
           </div>
 
@@ -316,21 +343,21 @@ export default function OrderForm() {
                 <input
                   type="radio"
                   name="pembayaran"
-                  value="cash"
-                  checked={pembayaran === "cash"}
-                  onChange={() => setPembayaran("cash")}
+                  value="kredit"
+                  checked={pembayaran === "kredit"}
+                  onChange={() => setPembayaran("kredit")}
                 />
-                Cash
+                Kredit
               </label>
               <label className="flex items-center gap-2">
                 <input
                   type="radio"
                   name="pembayaran"
-                  value="credit"
-                  checked={pembayaran === "credit"}
-                  onChange={() => setPembayaran("credit")}
+                  value="debit"
+                  checked={pembayaran === "debit"}
+                  onChange={() => setPembayaran("debit")}
                 />
-                Credit
+                Debit
               </label>
             </div>
           </div>
@@ -341,7 +368,8 @@ export default function OrderForm() {
               rows={3}
               value={ket}
               onChange={(e) => setKet(e.target.value)}
-              className="border rounded px-2 py-1 text-gray-900 dark:bg-gray-800 dark:text-white dark:border-gray-700" />
+              className="border rounded px-2 py-1 text-gray-900 dark:bg-gray-800 dark:text-white dark:border-gray-700"
+              placeholder='Informasi Tambahan' />
           </div>
 
           <div className="grid grid-cols-2 items-center gap-4">
@@ -367,7 +395,12 @@ export default function OrderForm() {
           <div className="flex justify-between items-center mt-4">
             <div className="flex items-center gap-2 font-bold text-lg">
               <span>Total</span>
-              <input type="text" className="border px-2 py-1 w-32 text-right" readOnly />
+              <input
+                type="text"
+                className="border px-2 py-1 w-32 text-right"
+                readOnly
+                value={totalHarga.toLocaleString("id-ID", { style: "currency", currency: "IDR" })}
+              />
             </div>
             <button
               type="submit"

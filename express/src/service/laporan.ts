@@ -1,12 +1,12 @@
-import { countLaporan, findLaporan, upsertLaporanHarian } from "../repository/laporan";
+import { countLaporan, findLaporanWithStatus, upsertLaporanHarian } from "../repository/laporan";
 import { LaporanData } from "../types/laporan";
 
-export const getAllLaporan = async (search: string, page: number, perPage: number) => {
+export const getAllLaporan = async (search: string, page: number, perPage: number, userId: number | null) => {
     const skip = (page - 1) * perPage;
 
     const [data, total] = await Promise.all([
-        findLaporan(search, skip, perPage),
-        countLaporan(search),
+        findLaporanWithStatus(search, skip, perPage, userId),
+        countLaporan(search, userId), // jika count juga perlu userId
     ]);
 
     return {

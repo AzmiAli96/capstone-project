@@ -5,6 +5,8 @@ import { MagnifyingGlassCircleIcon } from "@heroicons/react/24/outline";
 import Toast from "@/components/Toast";
 import axiosInstance from "@/lib/axiosInstance";
 import LaporanForm from "./input";
+import { Recycle, RefreshCw, Trash2 } from "lucide-react";
+import ExportExcel from "./import";
 
 export default function Laporan() {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -40,8 +42,8 @@ export default function Laporan() {
             setItems(response.data.data);
             setTotal(response.data.total);
         } catch (error) {
-            console.error("Gagal mengambil data cost:", error);
-            setToast({ type: "error", message: "Gagal mengambil data cost." });
+            console.error("Gagal mengambil data laporan:", error);
+            setToast({ type: "error", message: "Gagal mengambil data laporan." });
         }
     };
 
@@ -56,32 +58,26 @@ export default function Laporan() {
         fetchLaporan();
     };
 
-
-    const handleUpdateCost = (updatedCost: any) => {
-        setItems((prev) => prev.map((u) => (u.id === updatedCost.id ? updatedCost : u)));
-        setToast({ type: "success", message: "Cost berhasil diupdate." });
-    };
-
     const closeToast = () => setToast(null);
 
     // Delete
     const handleDelete = async (id: number) => {
-        console.log("Menghapus Cost dengan ID:", id); // Debug
+        console.log("Menghapus Laporan dengan ID:", id); // Debug
 
         try {
             const token = localStorage.getItem("token");
 
-            await axiosInstance.delete(`http://localhost:2000/cost/${id}`, {
+            await axiosInstance.delete(`http://localhost:2000/laporan/${id}`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
             });
 
             setItems((prev) => prev.filter((wilayah) => wilayah.id !== id));
-            setToast({ type: "success", message: "Cost berhasil Dihapus." });
+            setToast({ type: "success", message: "Laporan berhasil Dihapus." });
         } catch (error: any) {
-            console.log("Gagal menghapus Cost:", error.response?.data || error.message);
-            setToast({ type: "error", message: "Gagal menghapus Cost." });
+            console.log("Gagal menghapus Laporan:", error.response?.data || error.message);
+            setToast({ type: "error", message: "Gagal menghapus Laporan." });
         }
     };
 
@@ -110,6 +106,8 @@ export default function Laporan() {
                     </div>
                 </form>
 
+                <ExportExcel data={items} />
+                
                 <button
                     onClick={openModal}
                     className="ml-4 bg-blue-600 hover:bg-blue-700 dark:bg-blue-600 dark:hover:bg-blue-700 text-white font-medium py-2 px-4 rounded"
@@ -152,16 +150,16 @@ export default function Laporan() {
                                             month: "long",
                                             year: "numeric",
                                         })}</TableCell>
-                                        <TableCell>{item.bb}</TableCell>
-                                        <TableCell>{item.tkredit}</TableCell>
-                                        <TableCell>{item.tdebit}</TableCell>
-                                        <TableCell>{item.tbersih}</TableCell>
+                                        <TableCell>Rp {new Intl.NumberFormat('id-ID').format(item.bb)}</TableCell>
+                                        <TableCell>Rp {new Intl.NumberFormat('id-ID').format(item.tkredit)}</TableCell>
+                                        <TableCell>Rp {new Intl.NumberFormat('id-ID').format(item.tdebit)}</TableCell>
+                                        <TableCell>Rp {new Intl.NumberFormat('id-ID').format(item.tbersih)}</TableCell>
                                         <TableCell>
                                             <button
                                                 className="bg-green-600 hover:bg-blue-700 text-white hover:underline py-1 px-3 rounded"
                                                 onClick={() => { setSelectedLaporan(item); openEditModal(); }}
                                             >
-                                                Edit
+                                                <RefreshCw size={20} />
                                             </button>
                                             <button
                                                 className="ml-2 bg-red-600 text-white text-white py-1 px-3 rounded hover:underline"
@@ -171,7 +169,7 @@ export default function Laporan() {
                                                     }
                                                 }}
                                             >
-                                                Hapus
+                                                <Trash2 size={20} />
                                             </button>
                                         </TableCell>
                                     </TableRow>

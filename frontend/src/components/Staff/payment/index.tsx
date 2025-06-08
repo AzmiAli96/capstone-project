@@ -152,8 +152,8 @@ export default function Payment() {
                     className="hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200"
                   >
                     <TableCell>{index + 1}</TableCell>
-                    <TableCell>{item.pengiriman?.no_spb}</TableCell>
-                    <TableCell>{item.pengiriman?.user?.name}</TableCell>
+                    <TableCell>{item.pengiriman?.no_spb ? item.pengiriman?.no_spb : "Customer"}</TableCell>
+                    <TableCell>{item.pengiriman?.user?.role === "staff" ? item.pengiriman?.customer : item.pengiriman?.user?.name || "-"}</TableCell>
                     <TableCell>
                       <Badge color={getStatusColor(item.spengiriman)} variant="light">
                         {item.spengiriman}

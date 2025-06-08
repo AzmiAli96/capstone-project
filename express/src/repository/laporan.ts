@@ -1,24 +1,114 @@
 import prisma from "../db/prisma";
 import { LaporanData } from "../types/laporan";
 
-export const findLaporan = async (search: string, skip: number, take: number) => {
-    const laporan = await prisma.laporan.findMany({
-        include: { status: true },
+export const findLaporanWithStatus = async (search: string, skip: number, take: number, userId: number | null) => {
+    return await prisma.laporan.findMany({
+        include: {
+            status: {
+                include: {
+                    pengiriman: {
+                        include: {
+                            user: true,
+                            wilayah: true,
+                            ongkos: true,
+                        },
+                    },
+                },
+            },
+        },
+        where: {
+            OR: [
+                {
+                    status: {
+                        pengiriman: {
+                            no_spb: {
+                                contains: search,
+                                mode: "insensitive",
+                            },
+                        },
+                    },
+                },
+                {
+                    status: {
+                        pengiriman: {
+                            customer: {
+                                contains: search,
+                                mode: "insensitive",
+                            },
+                        },
+                    },
+                },
+                {
+                    status: {
+                        pengiriman: {
+                            tujuan: {
+                                contains: search,
+                                mode: "insensitive",
+                            },
+                        },
+                    },
+                },
+                {
+                    status: {
+                        pengiriman: {
+                            user: {
+                                name: {
+                                    contains: search,
+                                    mode: "insensitive",
+                                },
+                            },
+                        },
+                    },
+                },
+            ],
+            ...(userId
+                ? {
+                    status: {
+                        pengiriman: {
+                            id_user: userId,
+                        },
+                    },
+                }
+                : {}),
+        },
+        orderBy: {
+            tanggal: "desc",
+        },
         skip,
         take,
     });
-    return laporan;
-}
+};
 
-export const countLaporan = async (search: string) => {
-    return prisma.laporan.count({
+
+
+
+export const countLaporan = async (search: string, userId: number | null) => {
+    let tanggalFilter = undefined;
+
+    if (/^\d{4}-\d{2}-\d{2}$/.test(search)) {
+        const parsedDate = new Date(search);
+        tanggalFilter = {
+            gte: new Date(parsedDate.setHours(0, 0, 0, 0)),
+            lt: new Date(parsedDate.setHours(24, 0, 0, 0)),
+        };
+    }
+
+    return await prisma.laporan.count({
         where: {
-            OR: [
-                // { tanggal: { contains: search, mode: "insensitive" } },
-            ],
+            ...(tanggalFilter && { tanggal: tanggalFilter }),
+            ...(userId && {
+                status: {
+                    pengiriman: {
+                        id_user: userId,
+                    },
+                },
+            }),
         },
     });
 };
+
+
+
 
 export const upsertLaporanHarian = async (tanggalInput: string, bb: number) => {
     const tanggal = new Date(tanggalInput);
@@ -29,38 +119,35 @@ export const upsertLaporanHarian = async (tanggalInput: string, bb: number) => {
 
     const statuses = await prisma.status.findMany({
         where: {
-            pengiriman: {
-                tanggal: {
-                    gte: tanggal,
-                    lte: endOfDay
-                }
-            }
+            tanggal: {
+                gte: tanggal,
+                lte: endOfDay,
+            },
         },
         include: {
-            pengiriman: true
-        }
+            pengiriman: true,
+        },
     });
 
     const totalKredit = statuses
-        .filter(s => s.pengiriman?.pembayaran === "kredit")
+        .filter((s) => s.pengiriman?.pembayaran === "kredit")
         .reduce((sum, s) => sum + Number(s.pengiriman?.total || 0), 0);
 
     const totalDebit = statuses
-        .filter(s => s.pengiriman?.pembayaran === "debit")
+        .filter((s) => s.pengiriman?.pembayaran === "debit")
         .reduce((sum, s) => sum + Number(s.pengiriman?.total || 0), 0);
 
-    // const totalBersih = statuses.reduce((sum, s) => sum + Number(s.pengiriman?.total || 0), 0);
     const totalBersih = statuses
-        .filter(s => s.spembayaran === "Lunas")
+        .filter((s) => s.spembayaran.toLowerCase() === "lunas")
         .reduce((sum, s) => sum + Number(s.pengiriman?.total || 0), 0);
 
     const existing = await prisma.laporan.findFirst({
         where: {
             tanggal: {
                 gte: tanggal,
-                lte: endOfDay
-            }
-        }
+                lte: endOfDay,
+            },
+        },
     });
 
     if (existing) {
@@ -70,8 +157,8 @@ export const upsertLaporanHarian = async (tanggalInput: string, bb: number) => {
                 bb,
                 tkredit: totalKredit,
                 tdebit: totalDebit,
-                tbersih: totalBersih
-            }
+                tbersih: totalBersih,
+            },
         });
     } else {
         return prisma.laporan.create({
@@ -81,8 +168,8 @@ export const upsertLaporanHarian = async (tanggalInput: string, bb: number) => {
                 tkredit: totalKredit,
                 tdebit: totalDebit,
                 tbersih: totalBersih,
-                id_status: statuses[0]?.id ?? 1
-            }
+                id_status: statuses[0]?.id ?? 1,
+            },
         });
     }
 };
