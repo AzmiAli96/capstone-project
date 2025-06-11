@@ -6,7 +6,7 @@ import { StatusByIdController, StatusController, updateStatusController, uploadI
 import { AllCostController, CostByIdController, createCostController, deleteCostController, updateCostController } from "../controller/cost";
 import { accessValidation, roleAuthorization } from "../middleware/authmiddleware";
 import multer from "multer";
-import { createOrUpdateLaporan, LaporanController } from "../controller/laporan";
+import { createOrUpdateLaporan, LaporanBulananController, LaporanController, LaporanHarianController } from "../controller/laporan";
 
 const router = express.Router();
 const upload = multer();
@@ -63,6 +63,8 @@ router.post("/status/upload", upload.single("image"), uploadImageStatus);
 
 // Router untuk Laporan
 router.get('/laporan', LaporanController);
+router.get('/laporan/harian', LaporanHarianController);
+router.get("/laporan/harian/bulanan", LaporanBulananController);
 router.post('/laporan/harian', createOrUpdateLaporan);
 
 

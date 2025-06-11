@@ -173,3 +173,69 @@ export const upsertLaporanHarian = async (tanggalInput: string, bb: number) => {
         });
     }
 };
+
+export const findStatusForLaporanByTanggal = async (tanggal: string, userId: number | null) => {
+    const parsedDate = new Date(tanggal);
+    const startOfDay = new Date(parsedDate.setHours(0, 0, 0, 0));
+    const endOfDay = new Date(parsedDate.setHours(23, 59, 59, 999));
+
+    return await prisma.status.findMany({
+        where: {
+            tanggal: {
+                gte: startOfDay,
+                lte: endOfDay,
+            },
+            ...(userId && {
+                pengiriman: {
+                    id_user: userId,
+                },
+            }),
+        },
+        include: {
+            pengiriman: {
+                include: {
+                    user: true,
+                    wilayah: true,
+                    ongkos: true,
+                },
+            },
+            laporan: true, // kalau ingin menampilkan data laporan jika ada
+        },
+        orderBy: {
+            tanggal: "asc",
+        },
+    });
+};
+
+// repositories/laporanRepository.ts
+export const findStatusForLaporanByBulan = async (bulan: number, tahun: number, userId: number | null) => {
+    const startDate = new Date(tahun, bulan - 1, 1);
+    const endDate = new Date(tahun, bulan, 0, 23, 59, 59, 999); // hari terakhir bulan
+
+    return await prisma.status.findMany({
+        where: {
+            tanggal: {
+                gte: startDate,
+                lte: endDate,
+            },
+            ...(userId && {
+                pengiriman: {
+                    id_user: userId,
+                },
+            }),
+        },
+        include: {
+            pengiriman: {
+                include: {
+                    user: true,
+                    wilayah: true,
+                    ongkos: true,
+                },
+            },
+            laporan: true,
+        },
+        orderBy: {
+            tanggal: "asc",
+        },
+    });
+};
