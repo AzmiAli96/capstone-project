@@ -1,5 +1,5 @@
 import { response } from "express";
-import { countStatus, editStatus, findStatus, findStatusById, updateStatusImage } from "../repository/status";
+import { countStatus, countStatusPem, editStatus, findStatus, findStatusById, updateStatusImage } from "../repository/status";
 import { statusData } from "../types/status";
 import path from "path";
 import fs from "fs";
@@ -58,4 +58,8 @@ export const handleImageUploadStatus = async (
     }
 
     return { imagePath };
+};
+
+export const countTotalStatus = async () => {
+  return countStatusPem();
 };

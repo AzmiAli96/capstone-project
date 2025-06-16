@@ -1,5 +1,5 @@
 import express, { Request, Response } from 'express';
-import { createOrder, deleteOrderById, getAllOrder, getOrderById, handleImageUploadOrder, updateOrderById } from '../service/order';
+import { createOrder, deleteOrderById, findOrderByNoSPB, getAllOrder, getOrderById, getOrderPerMonth, getTotalOrder, handleImageUploadOrder, updateOrderById } from '../service/order';
 import { orderData } from '../types/order';
 
 const router = express.Router();
@@ -38,6 +38,13 @@ export const OrderByIdController = async (req: Request, res: Response) => {
 export const createOrderController = async (req: Request, res: Response) => {
     try {
         const body = req.body;
+
+        const existingOrder = await findOrderByNoSPB(body.no_spb);
+        if (existingOrder) {
+            return res.status(400).json({
+                message: "Nomor SPB sudah digunakan",
+            });
+        }
 
         const item: orderData = {
             no_spb: body.no_spb,
@@ -154,6 +161,24 @@ export const uploadImageOrder = async (req: Request, res: Response) => {
         console.error("Error:", error);
         return res.status(500).json({ error: `Terjadi kesalahan: ${error.message}` });
     }
+};
+
+export const OrderCountController = async (req: Request, res: Response) => {
+    try {
+        const count = await getTotalOrder();
+        res.send({ count });
+    } catch (error: any) {
+        res.status(400).send({ message: error.message });
+    }
+};
+
+export const OrderChartController = async (req: Request, res: Response) => {
+  try {
+    const data = await getOrderPerMonth();
+    res.json(data);
+  } catch (err) {
+    res.status(500).json({ message: "Gagal mengambil data grafik order" });
+  }
 };
 
 export default router;

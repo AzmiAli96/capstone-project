@@ -306,3 +306,25 @@ export const updateOrderImage = async (id: number, imagePath: string) => {
         data: { image: imagePath },
     });
 };
+
+export const findOrderNoSPB = async (no_spb: string) => {
+    if (!no_spb || no_spb.trim() === "") return null;
+    return await prisma.pengiriman.findUnique({
+        where: { no_spb }
+    });
+};
+
+export const countAllOrder = async () => {
+    return prisma.pengiriman.count();
+};
+
+export const countOrderPerMonth = async () => {
+    const result = await prisma.pengiriman.groupBy({
+        by: ["tanggal"],
+        _count: { id: true },
+    });
+
+    return result;
+};
+
+

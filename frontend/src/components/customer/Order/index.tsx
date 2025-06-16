@@ -8,7 +8,7 @@ import Select from 'react-select';
 export default function OrderForm() {
   const [berat, setBerat] = useState<number | "">("");
   const [koli, setKoli] = useState("");
-  const isJemputEnabled = typeof berat === 'number' && berat > 500;
+  const isJemputEnabled = typeof berat === 'number' && berat >= 500;
   const [pembayaran, setPembayaran] = useState("kredit");
   const [jemput, setJemput] = useState("");
   const [tujuan, setTujuan] = useState("");
@@ -294,7 +294,6 @@ export default function OrderForm() {
             />
           </div>
 
-          {/* Jemput selection from cost table */}
           <div className="grid grid-cols-2 items-start gap-4">
             <label className="text-gray-700 dark:text-gray-300">
               Jemput
@@ -322,7 +321,6 @@ export default function OrderForm() {
           </div>
 
 
-          {/* Alamat Jemput */}
           <div className="grid grid-cols-2 items-start gap-4">
             <label className="text-gray-700 dark:text-gray-300">Alamat Jemput</label>
             <input

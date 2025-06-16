@@ -1,14 +1,18 @@
-import MonthlySalesChart from "@/components/Staff/dashboard/MonthlyOrder";
-import { EcommerceMetrics } from "@/components/Staff/dashboard/user";
+import OrderChart from "@/components/Staff/dashboard/orderBulanan";
+import MonthlySalesChart from "@/components/Staff/dashboard/orderBulanan";
+import TargetStatus from "@/components/Staff/dashboard/target";
+import { Count } from "@/components/Staff/dashboard/user";
 
 
 export default function Ecommerce() {
   return (
     <div className="grid grid-co gap-4 md:gap-6">
       <div className="col-span-12 space-y-6 xl:col-span-7">
-        <EcommerceMetrics />
+        <Count />
+        
+        <TargetStatus/>
 
-        <MonthlySalesChart />
+        <OrderChart />
       </div>
       {/*   
         <div className="col-span-12 xl:col-span-5">

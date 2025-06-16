@@ -1,5 +1,5 @@
 import { response } from "express";
-import { countOrder, deleteOrder, editOrder, findOrder, findOrderById, insertOrder, updateOrderImage } from "../repository/order";
+import { countAllOrder, countOrder, countOrderPerMonth, deleteOrder, editOrder, findOrder, findOrderById, findOrderNoSPB, insertOrder, updateOrderImage } from "../repository/order";
 import { orderData } from "../types/order";
 import path from "path";
 import fs from "fs";
@@ -66,4 +66,34 @@ export const handleImageUploadOrder = async (
     }
 
     return { imagePath };
+};
+
+export const findOrderByNoSPB = async (no_spb: string) => {
+    const order = await findOrderNoSPB(no_spb);
+    return order
+};
+
+export const getTotalOrder = async () => {
+  return countAllOrder();
+};
+
+export const getOrderPerMonth = async () => {
+  const rawData = await countOrderPerMonth();
+
+  const grouped: Record<string, number> = {};
+
+  rawData.forEach((item) => {
+    const date = new Date(item.tanggal);
+    const key = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}`;
+
+    if (!grouped[key]) grouped[key] = 0;
+    grouped[key] += item._count.id;
+  });
+
+  return Object.entries(grouped)
+    .sort(([a], [b]) => new Date(a).getTime() - new Date(b).getTime())
+    .map(([bulan, jumlah]) => ({
+      bulan,
+      jumlah,
+    }));
 };

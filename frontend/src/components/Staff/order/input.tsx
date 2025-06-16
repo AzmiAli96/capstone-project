@@ -1,3 +1,4 @@
+import Toast from '@/components/Toast';
 import axiosInstance from '@/lib/axiosInstance';
 import { XMarkIcon } from '@heroicons/react/24/outline';
 import axios from 'axios';
@@ -77,8 +78,6 @@ export default function OrderForm({
     const [selectedWilayah, setSelectedWilayah] = useState("");
     const [selectedOngkos, setSelectedOngkos] = useState("");
 
-    // Filtered costs based on selected wilayah
-    const [filteredCosts, setFilteredCosts] = useState([]);
     const [toast, setToast] = useState<{ type: "success" | "error" | "warning"; message: string } | null>(null);
     const [errors, setErrors] = useState<{ [key: string]: boolean }>({});
 
@@ -225,7 +224,12 @@ export default function OrderForm({
 
         } catch (error: any) {
             console.error("Gagal menyimpan order:", error);
-            setToast({ type: "error", message: "Gagal menyimpan order." });
+
+            if (error.response && error.response.data && error.response.data.message) {
+                setToast({ type: "error", message: error.response.data.message });
+            } else {
+                setToast({ type: "error", message: "Gagal menyimpan order." });
+            }
         }
     };
 
@@ -274,6 +278,8 @@ export default function OrderForm({
         }
     };
 
+    const closeToast = () => setToast(null);
+
     // pencarian wilayah
     const wilayahOptions = wilayahList.map((wilayah: any) => ({
         value: wilayah.id,
@@ -285,6 +291,9 @@ export default function OrderForm({
 
     return (
         <Modal isOpen={isOpen} onClose={onClose}>
+            {toast && (
+                    <Toast type={toast.type} message={toast.message} onClose={closeToast} />
+                  )}
             <form className="grid grid-cols-1 gap-4" onSubmit={handleSubmit}>
                 <div className="grid grid-cols-2 items-center gap-4">
                     <label className="text-gray-700 dark:text-gray-300">No SPB</label>

@@ -87,7 +87,7 @@ export default function OrderInfo({ isOpen, onClose, orderId }: OrderInfoProps) 
         <Modal isOpen={isOpen} onClose={onClose}>
             {/* <h1>Tampilan Modal Info</h1> */}
             {item && (
-                <div
+                <div 
                     key={item.id}
                     className="border-b border-gray-300 dark:border-gray-700 py-4 space-y-2"
                 >

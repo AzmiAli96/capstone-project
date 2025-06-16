@@ -1,8 +1,8 @@
 import express from "express";
 import { AllWilayahController, createWilayahController, deleteWilayahController, getWilayahByIdController, updateWilayahController, WilayahCountController } from '../controller/wilayah';
 import { checkAuthController, deleteUserController, getAllUserController, getCustomerUserCountController, getUserByIdController, LoginController, LogoutController, RegisterController, updateUserController, uploadImage } from "../controller/user";
-import { createOrderController, deleteOrderController, OrderByIdController, OrderController, updateOrderController, uploadImageOrder } from "../controller/order";
-import { StatusByIdController, StatusController, updateStatusController, uploadImageStatus } from "../controller/status";
+import { createOrderController, deleteOrderController, OrderByIdController, OrderChartController, OrderController, OrderCountController, updateOrderController, uploadImageOrder } from "../controller/order";
+import { StatusByIdController, StatusController, StatusCountController, updateStatusController, uploadImageStatus } from "../controller/status";
 import { AllCostController, CostByIdController, createCostController, deleteCostController, updateCostController } from "../controller/cost";
 import { accessValidation, roleAuthorization } from "../middleware/authmiddleware";
 import multer from "multer";
@@ -48,7 +48,9 @@ router.delete("/user/:id", accessValidation, deleteUserController);
 router.post("/user/upload", upload.single("image"), uploadImage);
 
 // Router untuk pengiriman/order
+router.get("/order/chart", OrderChartController);
 router.get('/order', OrderController);
+router.get('/order/count', OrderCountController);
 router.get('/order/:id', OrderByIdController);
 router.post('/order', createOrderController);
 router.put('/order/:id', updateOrderController);
@@ -57,6 +59,7 @@ router.post("/order/upload", upload.single("image"), uploadImageOrder);
 
 // Router untuk pengiriman/order
 router.get('/status', StatusController);
+router.get('/status/count', StatusCountController);
 router.get('/status/:id', StatusByIdController);
 router.put('/status/:id', updateStatusController);
 router.post("/status/upload", upload.single("image"), uploadImageStatus);

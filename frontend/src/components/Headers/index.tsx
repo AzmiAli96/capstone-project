@@ -102,7 +102,7 @@ const Header = () => {
                     ))}
 
                     <Link
-                        href="#"
+                        href="/auth/login"
                         className="rounded-full bg-green-600 px-4 py-2 text-white hover:bg-green-700 text-sm font-semibold transition text-center"
                     >
                         Get Start

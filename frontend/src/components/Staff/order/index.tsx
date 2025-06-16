@@ -205,7 +205,7 @@ export default function Order() {
                     <TableCell>{index + 1}</TableCell>
                     <TableCell>{item.no_spb ? item.no_spb : "Customer"}</TableCell>
                     <TableCell>
-                      {item.user?.role === "staff" ? item.customer : item.user?.name || "-"}
+                      {item.customer}
                     </TableCell>
                     <TableCell>{item.tujuan}</TableCell>
                     <TableCell>{item.jemput ? item.jemput : "Ambil Sendiri"}</TableCell>

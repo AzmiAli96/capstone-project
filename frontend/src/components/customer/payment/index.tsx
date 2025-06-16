@@ -178,7 +178,7 @@ export default function Payment() {
                                                 className="hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200"
                                             >
                                                 <TableCell>{index + 1}</TableCell>
-                                                <TableCell>{item.pengiriman?.user?.name}</TableCell>
+                                                <TableCell>{item.pengiriman?.customer}</TableCell>
                                                 <TableCell>{item.pengiriman?.tujuan}</TableCell>
                                                 <TableCell>
                                                     <Badge color={getStatusColor(item.spengiriman)} variant="light">

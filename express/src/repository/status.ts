@@ -79,3 +79,29 @@ export const updateStatusImage = async (id: number, imagePath: string) => {
         data: { image: imagePath },
     });
 };
+
+export const countStatusPem = async () => {
+    const pending = await prisma.status.count({
+        where: { spengiriman: "Pending" }
+    });
+
+    const jemput = await prisma.status.count({
+        where: { spengiriman: "Jemput Barang" }
+    });
+
+    const menuju = await prisma.status.count({
+        where: { spengiriman: "Menuju Tujuan" }
+    });
+
+    const belumBayar = await prisma.status.count({
+        where: { spembayaran: "Belum dibayar" }
+    });
+
+    return {
+        pending,
+        jemput,
+        menuju,
+        belumBayar
+    };
+};
+

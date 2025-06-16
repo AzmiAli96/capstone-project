@@ -1,75 +1,22 @@
 import prisma from "../db/prisma";
 import { LaporanData } from "../types/laporan";
 
-export const findLaporanWithStatus = async (search: string, skip: number, take: number, userId: number | null) => {
+export const findLaporanWithStatus = async (search: string, skip: number, take: number) => {
+    let tanggalFilter = undefined;
+
+    // Cek apakah search adalah format tanggal (YYYY-MM-DD)
+    if (/^\d{4}-\d{2}-\d{2}$/.test(search)) {
+        const parsedDate = new Date(search);
+        tanggalFilter = {
+            gte: new Date(parsedDate.setHours(0, 0, 0, 0)),
+            lt: new Date(parsedDate.setHours(24, 0, 0, 0)),
+        };
+    }
+
     return await prisma.laporan.findMany({
-        include: {
-            status: {
-                include: {
-                    pengiriman: {
-                        include: {
-                            user: true,
-                            wilayah: true,
-                            ongkos: true,
-                        },
-                    },
-                },
-            },
-        },
+        include: { status: true },
         where: {
-            OR: [
-                {
-                    status: {
-                        pengiriman: {
-                            no_spb: {
-                                contains: search,
-                                mode: "insensitive",
-                            },
-                        },
-                    },
-                },
-                {
-                    status: {
-                        pengiriman: {
-                            customer: {
-                                contains: search,
-                                mode: "insensitive",
-                            },
-                        },
-                    },
-                },
-                {
-                    status: {
-                        pengiriman: {
-                            tujuan: {
-                                contains: search,
-                                mode: "insensitive",
-                            },
-                        },
-                    },
-                },
-                {
-                    status: {
-                        pengiriman: {
-                            user: {
-                                name: {
-                                    contains: search,
-                                    mode: "insensitive",
-                                },
-                            },
-                        },
-                    },
-                },
-            ],
-            ...(userId
-                ? {
-                    status: {
-                        pengiriman: {
-                            id_user: userId,
-                        },
-                    },
-                }
-                : {}),
+            ...(tanggalFilter && { tanggal: tanggalFilter }),
         },
         orderBy: {
             tanggal: "desc",
@@ -79,10 +26,7 @@ export const findLaporanWithStatus = async (search: string, skip: number, take: 
     });
 };
 
-
-
-
-export const countLaporan = async (search: string, userId: number | null) => {
+export const countLaporan = async (search: string) => {
     let tanggalFilter = undefined;
 
     if (/^\d{4}-\d{2}-\d{2}$/.test(search)) {
@@ -96,13 +40,6 @@ export const countLaporan = async (search: string, userId: number | null) => {
     return await prisma.laporan.count({
         where: {
             ...(tanggalFilter && { tanggal: tanggalFilter }),
-            ...(userId && {
-                status: {
-                    pengiriman: {
-                        id_user: userId,
-                    },
-                },
-            }),
         },
     });
 };
