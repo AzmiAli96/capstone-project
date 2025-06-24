@@ -9,7 +9,6 @@ export const findStatus = async (search: string, skip: number, take: number, use
             { pengiriman: { no_spb: { contains: search, mode: "insensitive" } } },
             { pengiriman: { customer: { contains: search, mode: "insensitive" } } },
             { pengiriman: { tujuan: { contains: search, mode: "insensitive" } } },
-            { pengiriman: { user: { name: { contains: search, mode: "insensitive" } } } },
         ],
     };
 
@@ -36,7 +35,6 @@ export const countStatus = async (search: string, userId: number | null) => {
             { pengiriman: { no_spb: { contains: search, mode: "insensitive" } } },
             { pengiriman: { customer: { contains: search, mode: "insensitive" } } },
             { pengiriman: { tujuan: { contains: search, mode: "insensitive" } } },
-            { pengiriman: { user: { name: { contains: search, mode: "insensitive" } } } },
         ],
     };
 

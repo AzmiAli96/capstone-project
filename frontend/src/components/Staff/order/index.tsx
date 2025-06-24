@@ -5,7 +5,7 @@ import { MagnifyingGlassCircleIcon } from "@heroicons/react/24/outline";
 import Toast from "@/components/Toast";
 import axiosInstance from "@/lib/axiosInstance";
 import OrderForm from "./input";
-import { Info, RefreshCw, Trash2 } from "lucide-react";
+import { Info, PenBox, RefreshCw, Trash2 } from "lucide-react";
 import OrderInfo from "./info";
 import Badge from "@/components/ui/badge";
 // import UpdateOrderForm from "./update";
@@ -226,7 +226,7 @@ export default function Order() {
                         className="bg-green-600 hover:bg-blue-700 text-white hover:underline py-1 px-3 rounded"
                         onClick={() => { setSelectedOrder(item); openEditModal(); }}
                       >
-                        <RefreshCw size={20} />
+                        <PenBox size={20} />
                       </button>
                       <button
                         className="ml-2 bg-red-600 text-white text-white py-1 px-3 rounded hover:underline"

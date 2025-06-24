@@ -155,11 +155,17 @@ export default function StatusInfo({ isOpen, onClose, statusId }: StatusInfoProp
                     {item?.image && (
                         <div className="grid grid-cols-2 items-center gap-4 mt-4">
                             <label className="text-gray-700 dark:text-gray-300">Gambar</label>
-                            <img
-                                src={`http://localhost:2000${item.image}`}
-                                alt="Status Image"
-                                className="w-40 h-auto bstatus rounded px-2 py-1 text-gray-900 dark:bg-gray-800 dark:text-white dark:bstatus-gray-700"
-                            />
+                            <a
+                                href={`http://localhost:2000${item.image}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                <img
+                                    src={`http://localhost:2000${item.image}`}
+                                    alt="Status Image"
+                                    className="w-40 h-auto bstatus rounded px-2 py-1 text-gray-900 dark:bg-gray-800 dark:text-white dark:bstatus-gray-700"
+                                />
+                            </a>
                         </div>
                     )}
                 </div>

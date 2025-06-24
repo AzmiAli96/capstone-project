@@ -6,7 +6,7 @@ import Toast from "@/components/Toast";
 import axiosInstance from "@/lib/axiosInstance";
 import UpdateStatusForm from "./update";
 import Badge from "@/components/ui/badge";
-import { Info, RefreshCw } from "lucide-react";
+import { Info, PenBox, RefreshCw } from "lucide-react";
 import StatusInfo from "./info";
 
 export default function Payment() {
@@ -171,7 +171,7 @@ export default function Payment() {
                         className="bg-green-600 hover:bg-blue-700 text-white hover:underline py-1 px-3 rounded"
                         onClick={() => handleEditClick(item)}
                       >
-                        <RefreshCw size={20} />
+                        <PenBox size={20} />
                       </button>
                       <button
                         className="ml-2 bg-blue-600 text-white text-white py-1 px-3 rounded hover:underline"

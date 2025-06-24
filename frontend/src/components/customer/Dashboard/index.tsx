@@ -57,17 +57,28 @@ const DashboardMenu = () => {
         },
     ];
     return (
-        <div className="w-full min-h-screen flex flex-col md:flex-row flex-wrap justify-center items-center gap-8 md:gap-20 bg-[#e3eaf2] pt-24 pb-24">
-            {menuItems.map((item, index) => (
-                <Link key={index} href={item.href}>
-                    <div className="bg-white w-75 h-75 shadow-md rounded-md flex flex-col items-center justify-center transition hover:scale-105">
-                        <div className="w-40 h-40 mb-6 rounded-full bg-[#dee6ef] border border-gray-400 flex items-center justify-center">
-                            {item.icon ?? null}
+        <div className="relative w-full min-h-screen">
+            <div className="absolute inset-0 -z-10">
+                <img
+                    src="/images/ilustrasi.jpg" 
+                    alt="Background"
+                    className="w-full h-full object-cover"
+                />
+            </div>
+            <div className="absolute inset-0 bg-[rgba(0,0,0,0.5)] backdrop-blur-none -z-10" />
+
+            <div className="relative z-10 w-full min-h-screen flex flex-col md:flex-row flex-wrap justify-center items-center gap-8 md:gap-20 pt-24 pb-24">
+                {menuItems.map((item, index) => (
+                    <Link key={index} href={item.href}>
+                        <div className="bg-white w-75 h-75 shadow-md rounded-md flex flex-col items-center justify-center transition hover:scale-105">
+                            <div className="w-40 h-40 mb-6 rounded-full bg-[#dee6ef] border border-gray-400 flex items-center justify-center">
+                                {item.icon ?? null}
+                            </div>
+                            <span className="text-black text-xl font-semibold">{item.title}</span>
                         </div>
-                        <span className="text-black text-xl font-semibold">{item.title}</span>
-                    </div>
-                </Link>
-            ))}
+                    </Link>
+                ))}
+            </div>
         </div>
     );
 };

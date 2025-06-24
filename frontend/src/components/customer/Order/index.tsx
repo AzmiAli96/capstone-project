@@ -220,202 +220,213 @@ export default function OrderForm() {
   };
 
   return (
-    <div className="min-h-screen bg-[#e3eaf2] flex items-center justify-center py-10 px-4">
-      <div className="bg-white p-8 rounded shadow-md w-full max-w-xl">
-        <div className="flex justify-between items-center mb-6">
-          <h2 className="text-2xl font-bold">Order</h2>
-          <Link href="/dashboard">
-            <button className="border border-gray-400 rounded-full px-4 py-1 hover:bg-gray-100">
-              Back
-            </button>
-          </Link>
-        </div>
+    <div className="relative w-full min-h-screen">
+      <div className="absolute inset-0 -z-10">
+        <img
+          src="/images/ilustrasi.jpg"
+          alt="Background"
+          className="w-full h-full object-cover"
+        />
+      </div>
+      <div className="absolute inset-0 bg-[rgba(0,0,0,0.5)] backdrop-blur-none -z-10" />
 
-        <form className="grid grid-cols-1 gap-4" onSubmit={handleSubmit}>
-          <div className="grid grid-cols-2 items-center gap-4">
-            <label className="text-gray-700 dark:text-gray-300">Nama Customer</label>
-            <input
-              type="text"
-              value={customer}
-              onChange={(e) => setCustomer(e.target.value)}
-              className="border rounded px-2 py-1 text-gray-900 dark:bg-gray-800 dark:text-white dark:border-gray-700"
-              placeholder='Nama Penerima'
-            />
+      <div className="relative z-10 min-h-screen flex items-center justify-center py-10 px-4">
+        <div className="bg-white p-8 rounded shadow-md w-full max-w-xl">
+          <div className="flex justify-between items-center mb-6">
+            <h2 className="text-2xl font-bold">Order</h2>
+            <Link href="/dashboard">
+              <button className="border border-gray-400 rounded-full px-4 py-1 hover:bg-gray-100">
+                Back
+              </button>
+            </Link>
           </div>
 
-          <div className="grid grid-cols-2 items-center gap-4">
-            <label className="text-gray-700 dark:text-gray-300">Berat (Kg)</label>
-            <input
-              type="number"
-              className="border rounded px-2 py-1 text-gray-900 dark:bg-gray-800 dark:text-white dark:border-gray-700"
-              value={berat}
-              onChange={(e) =>
-                setBerat(e.target.value === "" ? "" : Number(e.target.value))
-              }
-              required
-              placeholder='Berapa KG'
-            />
-          </div>
-
-          <div className="grid grid-cols-2 items-center gap-4">
-            <label className="text-gray-700 dark:text-gray-300">Koli / Jumlah Barang</label>
-            <input
-              type="text"
-              value={koli}
-              onChange={(e) => setKoli(e.target.value)}
-              className="border rounded px-2 py-1 text-gray-900 dark:bg-gray-800 dark:text-white dark:border-gray-700"
-              required
-              placeholder='Jumlah Barang'
-            />
-          </div>
-
-          <div className="grid grid-cols-2 items-center gap-4">
-            <label className="text-gray-700 dark:text-gray-300">Tujuan</label>
-            <Select
-              options={wilayahOptions}
-              value={wilayahOptions.find(option => option.value === Number(selectedWilayah))}
-              onChange={handleWilayahChange}
-              placeholder="Pilih tujuan"
-              isClearable
-              className="text-black w-full"
-              classNamePrefix="react-select"
-            />
-          </div>
-
-          <div className="grid grid-cols-2 items-center gap-4">
-            <label className="text-gray-700 dark:text-gray-300">Alamat Tujuan</label>
-            <input
-              type="text"
-              value={tujuan}
-              onChange={(e) => setTujuan(e.target.value)}
-              className="border rounded px-2 py-1 text-gray-900 dark:bg-gray-800 dark:text-white dark:border-gray-700"
-              required
-              placeholder='Nama Jalan, Nomor, Kota'
-            />
-          </div>
-
-          <div className="grid grid-cols-2 items-start gap-4">
-            <label className="text-gray-700 dark:text-gray-300">
-              Jemput
-            </label>
-            <div className="w-full">
-              <select
-                value={selectedOngkos}
-                onChange={(e) => setSelectedOngkos(e.target.value)}
-                disabled={!isJemputEnabled}
-                className="w-full border rounded px-2 py-1 disabled:bg-gray-100 disabled:text-gray-400"
-              >
-                <option value="">Pilih lokasi jemput</option>
-                {Array.isArray(ongkosList) &&
-                  ongkosList.map((ongkos: any) => (
-                    <option key={ongkos.id} value={ongkos.id}>
-                      {ongkos.jemput}
-                    </option>
-                  ))}
-              </select>
-
-              <p className="text-sm text-gray-500 mt-1">
-                Jemput hanya tersedia jika berat barang lebih dari 500.
-              </p>
-            </div>
-          </div>
-
-
-          <div className="grid grid-cols-2 items-start gap-4">
-            <label className="text-gray-700 dark:text-gray-300">Alamat Jemput</label>
-            <input
-              type="text"
-              value={jemput}
-              onChange={(e) => setJemput(e.target.value)}
-              className="border rounded px-2 py-1 text-gray-900 dark:bg-gray-800 dark:text-white dark:border-gray-700"
-              disabled={!isJemputEnabled}
-              required={isJemputEnabled}
-              placeholder='Nama Jalan, Nomor, Kota'
-            />
-          </div>
-
-          <div className="grid grid-cols-2 items-start gap-4">
-            <label className="text-gray-700 dark:text-gray-300">Pembayaran</label>
-            <div className="flex flex-col gap-1">
-              <label className="flex items-center gap-2">
-                <input
-                  type="radio"
-                  name="pembayaran"
-                  value="kredit"
-                  checked={pembayaran === "kredit"}
-                  onChange={() => setPembayaran("kredit")}
-                />
-                Kredit
-              </label>
-              <label className="flex items-center gap-2">
-                <input
-                  type="radio"
-                  name="pembayaran"
-                  value="debit"
-                  checked={pembayaran === "debit"}
-                  onChange={() => setPembayaran("debit")}
-                />
-                Debit
-              </label>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-2 items-start gap-4">
-            <label className="text-gray-700 dark:text-gray-300">Keterangan</label>
-            <textarea
-              rows={3}
-              value={ket}
-              onChange={(e) => setKet(e.target.value)}
-              className="border rounded px-2 py-1 text-gray-900 dark:bg-gray-800 dark:text-white dark:border-gray-700"
-              placeholder='Informasi Tambahan' />
-          </div>
-
-          <div className="grid grid-cols-2 items-center gap-4">
-            <label className="text-gray-700 dark:text-gray-300">Gambar (Image)</label>
-            <input
-              type="file"
-              accept="image/*"
-              onChange={handleFileChange}
-              className="border rounded px-2 py-1 text-gray-900 dark:bg-gray-800 dark:text-white dark:border-gray-700"
-            />
-          </div>
-          <div className="grid grid-cols-2 items-center gap-4">
-            <label className="text-gray-700 dark:text-gray-300"></label>
-            {selectedFile && (
-              <img
-                src={URL.createObjectURL(selectedFile)}
-                alt="Preview"
-                className="border rounded px-2 py-1 text-gray-900 dark:bg-gray-800 dark:text-white dark:border-gray-700"
-              />
-            )}
-          </div>
-
-          <div className="flex justify-between items-center mt-4">
-            <div className="flex items-center gap-2 font-bold text-lg">
-              <span>Total</span>
+          <form className="grid grid-cols-1 gap-4" onSubmit={handleSubmit}>
+            <div className="grid grid-cols-2 items-center gap-4">
+              <label className="text-gray-700 dark:text-gray-300">Nama Customer</label>
               <input
                 type="text"
-                className="border px-2 py-1 w-32 text-right"
-                readOnly
-                value={totalHarga.toLocaleString("id-ID", { style: "currency", currency: "IDR" })}
+                value={customer}
+                onChange={(e) => setCustomer(e.target.value)}
+                className="border rounded px-2 py-1 text-gray-900 dark:bg-gray-800 dark:text-white dark:border-gray-700"
+                placeholder='Nama Penerima'
               />
             </div>
-            <button
-              type="submit"
-              className="bg-white border border-gray-400 rounded-full px-6 py-1 hover:bg-gray-100"
-            >
-              Order
-            </button>
-          </div>
-        </form>
+
+            <div className="grid grid-cols-2 items-center gap-4">
+              <label className="text-gray-700 dark:text-gray-300">Berat (Kg)</label>
+              <input
+                type="number"
+                className="border rounded px-2 py-1 text-gray-900 dark:bg-gray-800 dark:text-white dark:border-gray-700"
+                value={berat}
+                onChange={(e) =>
+                  setBerat(e.target.value === "" ? "" : Number(e.target.value))
+                }
+                required
+                placeholder='Berapa KG'
+              />
+            </div>
+
+            <div className="grid grid-cols-2 items-center gap-4">
+              <label className="text-gray-700 dark:text-gray-300">Koli / Jumlah Barang</label>
+              <input
+                type="text"
+                value={koli}
+                onChange={(e) => setKoli(e.target.value)}
+                className="border rounded px-2 py-1 text-gray-900 dark:bg-gray-800 dark:text-white dark:border-gray-700"
+                required
+                placeholder='Jumlah Barang'
+              />
+            </div>
+
+            <div className="grid grid-cols-2 items-center gap-4">
+              <label className="text-gray-700 dark:text-gray-300">Tujuan</label>
+              <Select
+                options={wilayahOptions}
+                value={wilayahOptions.find(option => option.value === Number(selectedWilayah))}
+                onChange={handleWilayahChange}
+                placeholder="Pilih tujuan"
+                isClearable
+                className="text-black w-full"
+                classNamePrefix="react-select"
+              />
+            </div>
+
+            <div className="grid grid-cols-2 items-center gap-4">
+              <label className="text-gray-700 dark:text-gray-300">Alamat Tujuan</label>
+              <input
+                type="text"
+                value={tujuan}
+                onChange={(e) => setTujuan(e.target.value)}
+                className="border rounded px-2 py-1 text-gray-900 dark:bg-gray-800 dark:text-white dark:border-gray-700"
+                required
+                placeholder='Nama Jalan, Nomor, Kota'
+              />
+            </div>
+
+            <div className="grid grid-cols-2 items-start gap-4">
+              <label className="text-gray-700 dark:text-gray-300">
+                Jemput
+              </label>
+              <div className="w-full">
+                <select
+                  value={selectedOngkos}
+                  onChange={(e) => setSelectedOngkos(e.target.value)}
+                  disabled={!isJemputEnabled}
+                  className="w-full border rounded px-2 py-1 disabled:bg-gray-100 disabled:text-gray-400"
+                >
+                  <option value="">Pilih lokasi jemput</option>
+                  {Array.isArray(ongkosList) &&
+                    ongkosList.map((ongkos: any) => (
+                      <option key={ongkos.id} value={ongkos.id}>
+                        {ongkos.jemput}
+                      </option>
+                    ))}
+                </select>
+
+                <p className="text-sm text-gray-500 mt-1">
+                  Jemput hanya tersedia jika berat barang lebih dari 500.
+                </p>
+              </div>
+            </div>
+
+
+            <div className="grid grid-cols-2 items-start gap-4">
+              <label className="text-gray-700 dark:text-gray-300">Alamat Jemput</label>
+              <input
+                type="text"
+                value={jemput}
+                onChange={(e) => setJemput(e.target.value)}
+                className="border rounded px-2 py-1 text-gray-900 dark:bg-gray-800 dark:text-white dark:border-gray-700"
+                disabled={!isJemputEnabled}
+                required={isJemputEnabled}
+                placeholder='Nama Jalan, Nomor, Kota'
+              />
+            </div>
+
+            <div className="grid grid-cols-2 items-start gap-4">
+              <label className="text-gray-700 dark:text-gray-300">Pembayaran</label>
+              <div className="flex flex-col gap-1">
+                <label className="flex items-center gap-2">
+                  <input
+                    type="radio"
+                    name="pembayaran"
+                    value="kredit"
+                    checked={pembayaran === "kredit"}
+                    onChange={() => setPembayaran("kredit")}
+                  />
+                  Kredit
+                </label>
+                <label className="flex items-center gap-2">
+                  <input
+                    type="radio"
+                    name="pembayaran"
+                    value="debit"
+                    checked={pembayaran === "debit"}
+                    onChange={() => setPembayaran("debit")}
+                  />
+                  Debit
+                </label>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-2 items-start gap-4">
+              <label className="text-gray-700 dark:text-gray-300">Keterangan</label>
+              <textarea
+                rows={3}
+                value={ket}
+                onChange={(e) => setKet(e.target.value)}
+                className="border rounded px-2 py-1 text-gray-900 dark:bg-gray-800 dark:text-white dark:border-gray-700"
+                placeholder='Informasi Tambahan' />
+            </div>
+
+            <div className="grid grid-cols-2 items-center gap-4">
+              <label className="text-gray-700 dark:text-gray-300">Gambar (Image)</label>
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleFileChange}
+                className="border rounded px-2 py-1 text-gray-900 dark:bg-gray-800 dark:text-white dark:border-gray-700"
+              />
+            </div>
+            <div className="grid grid-cols-2 items-center gap-4">
+              <label className="text-gray-700 dark:text-gray-300"></label>
+              {selectedFile && (
+                <img
+                  src={URL.createObjectURL(selectedFile)}
+                  alt="Preview"
+                  className="border rounded px-2 py-1 text-gray-900 dark:bg-gray-800 dark:text-white dark:border-gray-700"
+                />
+              )}
+            </div>
+
+            <div className="flex justify-between items-center mt-4">
+              <div className="flex items-center gap-2 font-bold text-lg">
+                <span>Total</span>
+                <input
+                  type="text"
+                  className="border px-2 py-1 w-32 text-right"
+                  readOnly
+                  value={totalHarga.toLocaleString("id-ID", { style: "currency", currency: "IDR" })}
+                />
+              </div>
+              <button
+                type="submit"
+                className="bg-white border border-gray-400 rounded-full px-6 py-1 hover:bg-gray-100"
+              >
+                Order
+              </button>
+            </div>
+          </form>
+        </div>
+        {toast && (
+          <Toast
+            type={toast.type}
+            message={toast.message}
+            onClose={closeToast}
+          />
+        )}
       </div>
-      {toast && (
-        <Toast
-          type={toast.type}
-          message={toast.message}
-          onClose={closeToast}
-        />
-      )}
     </div>
   );
 }

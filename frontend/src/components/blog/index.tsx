@@ -5,7 +5,7 @@ import SectionHeader from "@/components/Common/SectionHeader";
 
 const Blog = () => {
   return (
-    <section className="py-20 lg:py-25 xl:py-30">
+    <section className="py-10 lg:py-12 xl:py-14">
       <div className="mx-auto max-w-c-1315 px-4 md:px-8 xl:px-0">
         {/* <!-- Section Title Start --> */}
         <div className="animate_top mx-auto text-center">
@@ -13,7 +13,7 @@ const Blog = () => {
             headerInfo={{
               title: `NEWS & BLOGS`,
               subtitle: `Latest News & Blogs`,
-              description: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. In convallis tortor eros. Donec vitae tortor lacus. Phasellus aliquam ante in maximus.`,
+              description: `kumpulan berita dan blog terbaru kami! Temukan beragam informasi mulai dari pengumuman penting dan tips efisien.`,
             }}
           />
         </div>

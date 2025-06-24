@@ -87,7 +87,7 @@ export default function OrderInfo({ isOpen, onClose, orderId }: OrderInfoProps) 
         <Modal isOpen={isOpen} onClose={onClose}>
             {/* <h1>Tampilan Modal Info</h1> */}
             {item && (
-                <div 
+                <div
                     key={item.id}
                     className="border-b border-gray-300 dark:border-gray-700 py-4 space-y-2"
                 >
@@ -153,11 +153,17 @@ export default function OrderInfo({ isOpen, onClose, orderId }: OrderInfoProps) 
                     {item?.image && (
                         <div className="grid grid-cols-2 items-center gap-4 mt-4">
                             <label className="text-gray-700 dark:text-gray-300">Gambar</label>
-                            <img
-                                src={`http://localhost:2000${item.image}`}
-                                alt="Order Image"
-                                className="w-40 h-auto border rounded px-2 py-1 text-gray-900 dark:bg-gray-800 dark:text-white dark:border-gray-700"
-                            />
+                            <a
+                                href={`http://localhost:2000${item.image}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                <img
+                                    src={`http://localhost:2000${item.image}`}
+                                    alt="Order Image"
+                                    className="w-40 h-auto border rounded px-2 py-1 text-gray-900 dark:bg-gray-800 dark:text-white dark:border-gray-700"
+                                />
+                            </a>
                         </div>
                     )}
                 </div>

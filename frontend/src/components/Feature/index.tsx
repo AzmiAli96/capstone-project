@@ -15,7 +15,7 @@ interface FeatureItem {
 const FeatureCard = ({ feature }: { feature: FeatureItem }) => {
   return (
     <div className="group relative rounded-lg bg-white p-7.5 shadow-solid-3 transition-all hover:shadow-solid-4 dark:bg-blacksection dark:hover:bg-hoverdark xl:p-12.5">
-      <div className="mb-7.5 flex h-16 w-16 items-center justify-center rounded-[4px] bg-primary text-white">
+      <div className="mb-7.5 flex h-16 w-16 items-center justify-center rounded-[4px] bg-green-300">
         {typeof feature.icon === 'string' ? (
           feature.icon.startsWith('/') ? (
             <Image 
