@@ -146,7 +146,7 @@ const LayoutSidebar: React.FC = () => {
     }, [pathname, openSubmenuByName]);
 
     return (
-        <>
+        <div className="relative overflow-x-hidden">
             {/* Mobile overlay */}
             {isMobileOpen && (
                 <div
@@ -158,10 +158,12 @@ const LayoutSidebar: React.FC = () => {
             {/* Sidebar */}
             <aside
                 className={`
-    h-screen bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-600 shadow-md dark:shadow-gray-900/70
+    h-screen bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-600
+    shadow-md dark:shadow-gray-900/70
     fixed lg:sticky lg:top-0
-    transition-all duration-300 ease-in-out z-30
-    overflow-hidden flex-shrink-0
+    transition-all duration-300 ease-in-out
+    z-30 flex-shrink-0
+    overflow-hidden overflow-x-hidden
     ${isMobile
                         ? isMobileOpen ? "w-64" : "w-0"
                         : isExpanded ? "w-64" : "w-20"
@@ -217,10 +219,10 @@ const LayoutSidebar: React.FC = () => {
                                                     transition-colors duration-200
                                                 `}
                                                     >
-                                                        <div className="flex items-center">
+                                                        <div className="flex items-center min-w-0">
                                                             <span className="text-gray-500 dark:text-gray-300">{item.icon}</span>
                                                             {(isExpanded || (isMobile && isMobileOpen)) && (
-                                                                <span className="ml-3 font-medium">{item.name}</span>
+                                                                <span className="ml-3 font-medium truncate min-w-0">{item.name}</span>
                                                             )}
                                                         </div>
                                                         {(isExpanded || (isMobile && isMobileOpen)) && (
@@ -234,7 +236,7 @@ const LayoutSidebar: React.FC = () => {
 
                                                     {/* Tooltip for collapsed sidebar */}
                                                     {!isExpanded && !isMobile && hoveredItem === item.name && (
-                                                        <div className="absolute left-full ml-2 px-3 py-1 bg-gray-800 text-white text-sm rounded-md whitespace-nowrap z-50">
+                                                        <div className="fixed px-3 py-1 bg-gray-800 text-white text-sm rounded-md whitespace-nowrap z-50 left-[80px] top-auto">
                                                             {item.name}
                                                         </div>
                                                     )}
@@ -301,23 +303,24 @@ const LayoutSidebar: React.FC = () => {
                                                         onMouseEnter={() => !isExpanded && !isMobile && setHoveredItem(item.name)}
                                                         onMouseLeave={() => !isExpanded && !isMobile && setHoveredItem(null)}
                                                         className={`
-                                                    flex items-center px-4 py-2 rounded-lg 
+                                                            flex items-center px-4 py-2 rounded-lg 
+                                                            transition-colors duration-200
                                                     ${isActive(item.path || '') ? 'bg-gray-100 text-blue-600 dark:bg-gray-700 dark:text-blue-400' : 'hover:bg-gray-100'}
                                                     ${!isExpanded && !isMobile ? 'justify-center' : ''}
-                                                    transition-colors duration-200
+                                                    min-w-0
                                                 `}
                                                     >
                                                         <span className={isActive(item.path || '') ? 'text-blue-600' : 'text-gray-500'}>
                                                             {item.icon}
                                                         </span>
                                                         {(isExpanded || (isMobile && isMobileOpen)) && (
-                                                            <span className="ml-3 font-medium">{item.name}</span>
+                                                            <span className="ml-3 font-medium truncate min-w-0">{item.name}</span>
                                                         )}
                                                     </Link>
 
                                                     {/* Tooltip for collapsed sidebar */}
                                                     {!isExpanded && !isMobile && hoveredItem === item.name && (
-                                                        <div className="absolute left-full ml-2 px-3 py-1 bg-gray-800 text-white text-sm rounded-md whitespace-nowrap z-50">
+                                                        <div className="fixed px-3 py-1 bg-gray-800 text-white text-sm rounded-md whitespace-nowrap z-50 left-[80px] top-auto">
                                                             {item.name}
                                                         </div>
                                                     )}
@@ -331,7 +334,7 @@ const LayoutSidebar: React.FC = () => {
                     )}
                 </div>
             </aside>
-        </>
+        </div>
     );
 };
 

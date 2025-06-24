@@ -142,7 +142,6 @@ export default function LaporanForm({
                 <div className="mt-4 flex justify-end space-x-2">
                     <div className="flex justify-between items-center mt-4 w-full">
                         <div>
-                            {/* Removed total calculation */}
                         </div>
 
                         <div>
