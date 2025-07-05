@@ -5,7 +5,10 @@ import jwt from "jsonwebtoken";
 export async function GET() {
   // await karena cookies() mengembalikan Promise sekarang
   const cookieStore = await cookies();
+
   const token = cookieStore.get("token")?.value;
+
+  console.log("JWT Token from cookies:", token);
 
   if (!token) {
     return NextResponse.json({ message: "Token not found" }, { status: 401 });
