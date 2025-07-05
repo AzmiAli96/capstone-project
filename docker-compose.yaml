@@ -34,6 +34,7 @@ services:
     environment:
       - JWT_SECREET=iR++LRtav0AYML1GMXz+/XDk85uEnnOVk7QVSJF7TMw
       - NEXT_PUBLIC_NODE_ENV=development
+      - NEXT_PUBLIC_API_URL=https://api.gemilangcargo.com
       - TZ='Asia/Jakarta'
     ports:
       - "3000:3000"
