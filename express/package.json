@@ -6,7 +6,7 @@
     "scripts": {
         "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
         "start": "node --openssl-legacy-provider dist/server.js",
-        "build": "tsc --project tsconfig.json && prisma generate"
+        "build": "tsc && prisma generate"
     },
     "prisma": {
         "seed": "ts-node prisma/seed.ts"
