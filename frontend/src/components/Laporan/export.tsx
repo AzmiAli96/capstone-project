@@ -19,7 +19,7 @@ export default function ExportLaporanModal({ show, onClose }: Props) {
     setLoading(true);
     try {
       const res = await fetch(
-        `http://localhost:2000/laporan/harian/bulanan?bulan=${bulan}&tahun=${tahun}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/laporan/harian/bulanan?bulan=${bulan}&tahun=${tahun}`,
         {
           credentials: "include",
         }

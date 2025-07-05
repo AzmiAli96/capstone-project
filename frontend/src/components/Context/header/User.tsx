@@ -57,7 +57,7 @@ export default function UserDropdown() {
       <span className="mr-3 overflow-hidden rounded-full h-11 w-11">
         {image ? (
           <img
-            src={`http://localhost:2000${image}`}
+            src={`${process.env.NEXT_PUBLIC_API_URL}${image}`}
             alt="User Image"
             className="w-full h-full object-cover rounded-full"
           />

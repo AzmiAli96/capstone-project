@@ -19,7 +19,7 @@ const DashboardMenu = () => {
                 const data = await res.json();
                 const imagePath = data?.user?.image;
                 if (imagePath) {
-                    setUserImage(`http://localhost:2000${imagePath}`);
+                    setUserImage(`${process.env.NEXT_PUBLIC_API_URL}${imagePath}`);
                 }
             } catch (error) {
                 console.error("Gagal memuat user:", error);

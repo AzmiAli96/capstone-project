@@ -76,7 +76,7 @@ export default function UpdateCostForm({ isOpen, onClose, onUpdateCost, cost, }:
             };
 
             const response = await axiosInstance.put(
-                `http://localhost:2000/cost/${cost.id}`, 
+                `/cost/${cost.id}`, 
                 updatedCost,
                 {
                     headers: { "Content-Type": "application/json" },

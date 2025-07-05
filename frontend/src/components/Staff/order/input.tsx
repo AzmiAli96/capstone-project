@@ -205,11 +205,11 @@ export default function OrderForm({
             let newOrderId: number | null = null;
 
             if (mode === "edit" && existingOrder?.id) {
-                await axiosInstance.put(`http://localhost:2000/order/${existingOrder.id}`, payload);
+                await axiosInstance.put(`/order/${existingOrder.id}`, payload);
                 newOrderId = existingOrder.id;
                 setToast({ type: "success", message: "Order berhasil diperbarui." });
             } else {
-                const response = await axiosInstance.post("http://localhost:2000/order", payload);
+                const response = await axiosInstance.post("/order", payload);
                 const newOrder = response.data.data;
                 newOrderId = newOrder.id;
                 setToast({ type: "success", message: "Order berhasil ditambahkan." });
@@ -258,7 +258,7 @@ export default function OrderForm({
         formData.append("id", orderId.toString());
 
         try {
-            const response = await fetch("http://localhost:2000/order/upload", {
+            const response = await fetch("${process.env.NEXT_PUBLIC_API_URL}/order/upload", {
                 method: "POST",
                 body: formData,
             });

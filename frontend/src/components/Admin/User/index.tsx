@@ -26,7 +26,7 @@ export default function User() {
 
   const fetchUsers = async () => {
     try {
-      const response = await axiosInstance.get("http://localhost:2000/user", {
+      const response = await axiosInstance.get(`/user`, {
         params: {
           search: searchQuery,
           page,
@@ -74,7 +74,7 @@ export default function User() {
     try {
       const token = localStorage.getItem("token");
 
-      await axiosInstance.delete(`http://localhost:2000/user/${id}`, {
+      await axiosInstance.delete(`/user/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

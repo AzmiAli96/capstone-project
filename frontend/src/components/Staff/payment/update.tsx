@@ -81,7 +81,7 @@ export default function UpdateStatusForm({ isOpen, onClose, onUpdateStatus, stat
                 formData.append("image", selectedFile);
                 formData.append("id", status.id.toString());
 
-                const response = await fetch("http://localhost:2000/status/upload", {
+                const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/status/upload`, {
                     method: "POST",
                     body: formData,
                 });
@@ -109,7 +109,7 @@ export default function UpdateStatusForm({ isOpen, onClose, onUpdateStatus, stat
             console.log("Mengirim update status dengan:", updatedStatus);
 
             const response = await axiosInstance.put(
-                `http://localhost:2000/status/${status.id}`,
+                `/status/${status.id}`,
                 updatedStatus,
                 {
                     headers: { "Content-Type": "application/json" },

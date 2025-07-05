@@ -66,7 +66,7 @@ export default function InputCostForm({ isOpen, onClose, onAddCost, }: { isOpen:
                 jemput,
                 harga
             };
-            const response = await axiosInstance.post("http://localhost:2000/cost", newCost, {
+            const response = await axiosInstance.post(`/cost`, newCost, {
                 headers: { "Content-Type": "application/json" },
             });
             console.log(response.data);

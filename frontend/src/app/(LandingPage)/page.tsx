@@ -8,7 +8,6 @@ import Header from "@/components/Headers";
 export default function LandingPage() {
   return (
     <>
-      <Header />
       <Hero />
       <Feature />
       <Blog />

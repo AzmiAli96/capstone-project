@@ -12,7 +12,7 @@ export const Count = () => {
   useEffect(() => {
     const fetchCustomerCount = async () => {
       try {
-        const res = await fetch("http://localhost:2000/user/count-customer", {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/count-customer`, {
           credentials: "include", // Kirim cookie secara otomatis
         });
         if (!res.ok) throw new Error("Gagal mengambil jumlah customer");
@@ -30,7 +30,7 @@ export const Count = () => {
   useEffect(() => {
     const fetchWilayahCount = async () => {
       try {
-        const res = await fetch("http://localhost:2000/wilayah/count", {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/wilayah/count`, {
           credentials: "include",
         });
         if (!res.ok) throw new Error("Gagal mengambil jumlah wilayah");
@@ -48,7 +48,7 @@ export const Count = () => {
   useEffect(() => {
     const fetchOrderCount = async () => {
       try {
-        const res = await fetch("http://localhost:2000/order/count", {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/order/count`, {
           credentials: "include",
         });
         if (!res.ok) throw new Error("Gagal mengambil jumlah Order");

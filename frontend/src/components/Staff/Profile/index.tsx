@@ -52,7 +52,7 @@ export default function ProfileStaff() {
         formData.append("id", userId?.toString() || "");
 
         try {
-            const response = await fetch("http://localhost:2000/user/upload", {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/upload`, {
                 method: "POST",
                 body: formData,
             });
@@ -99,7 +99,7 @@ export default function ProfileStaff() {
 
             if (!userId) return;
 
-            const response = await axiosInstance.put(`http://localhost:2000/user/${userId}`, updatedUser, {
+            const response = await axiosInstance.put(`/user/${userId}`, updatedUser, {
                 headers: { "Content-Type": "application/json" },
                 withCredentials: true
             });
@@ -139,7 +139,7 @@ export default function ProfileStaff() {
                     <div className="w-48 h-48 rounded-full bg-[#dee3ea] flex items-center justify-center">
                         {image ? (
                             <img
-                                src={`http://localhost:2000${image}`}
+                                src={`${process.env.NEXT_PUBLIC_API_URL}${image}`}
                                 alt="User Image"
                                 className="w-full h-full object-cover rounded-full"
                             />

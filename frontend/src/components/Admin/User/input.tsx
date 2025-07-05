@@ -80,7 +80,7 @@ export default function InputUserForm({ isOpen, onClose, onAddUser, }: { isOpen:
         try {
             const newUser = { name, email, password, alamat, no_hp, role };
             const response = await axiosInstance.post(
-                "http://localhost:2000/user/register",
+                `/user/register`,
                 newUser,
                 { headers: { "Content-Type": "application/json" } }
             );

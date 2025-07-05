@@ -99,10 +99,10 @@ export default function LaporanForm({
         try {
 
             if (mode === "edit" && existingLaporan?.id) {
-                await axiosInstance.post(`http://localhost:2000/laporan/harian`, payload);
+                await axiosInstance.post(`/laporan/harian`, payload);
                 setToast({ type: "success", message: "Laporan berhasil diperbarui." });
             } else {
-                const response = await axiosInstance.post("http://localhost:2000/laporan/harian", payload);
+                const response = await axiosInstance.post("/laporan/harian", payload);
                 const newLaporan = response.data.data;
                 setToast({ type: "success", message: "Laporan berhasil ditambahkan." });
             }

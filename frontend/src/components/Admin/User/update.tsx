@@ -88,7 +88,7 @@ export default function UpdateUserForm({ isOpen, onClose, onUpdateUser, user, }:
             };
 
             const response = await axiosInstance.put(
-                `http://localhost:2000/user/${user.id}`, // pastikan user punya ID
+                `/user/${user.id}`, // pastikan user punya ID
                 updatedUser,
                 {
                     headers: { "Content-Type": "application/json" },

@@ -31,7 +31,7 @@ export default function Laporan() {
     // get semua data wilayah + search
     const fetchLaporan = async () => {
         try {
-            const response = await axiosInstance.get("http://localhost:2000/laporan", {
+            const response = await axiosInstance.get(`/laporan`, {
                 params: {
                     search: searchQuery,
                     page,
@@ -72,7 +72,7 @@ export default function Laporan() {
         try {
             const token = localStorage.getItem("token");
 
-            await axiosInstance.delete(`http://localhost:2000/laporan/${id}`, {
+            await axiosInstance.delete(`/laporan/${id}`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },

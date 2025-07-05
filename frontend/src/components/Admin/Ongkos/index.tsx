@@ -26,7 +26,7 @@ export default function Cost() {
   // get semua data wilayah + search
   const fetchCosts = async () => {
     try {
-      const response = await axiosInstance.get("http://localhost:2000/cost", {
+      const response = await axiosInstance.get(`/cost`, {
         params: {
           search: searchQuery,
           page,
@@ -74,7 +74,7 @@ export default function Cost() {
     try {
       const token = localStorage.getItem("token");
 
-      await axiosInstance.delete(`http://localhost:2000/cost/${id}`, {
+      await axiosInstance.delete(`/cost/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

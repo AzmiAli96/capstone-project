@@ -78,7 +78,7 @@ export default function InputWilayahForm({ isOpen, onClose, onAddWilayah, }: { i
                 wilayah,
                 harga
             };
-            const response = await axiosInstance.post("http://localhost:2000/wilayah", newWilayah, {
+            const response = await axiosInstance.post(`/wilayah`, newWilayah, {
                 headers: { "Content-Type": "application/json" },
             });
             console.log(response.data);

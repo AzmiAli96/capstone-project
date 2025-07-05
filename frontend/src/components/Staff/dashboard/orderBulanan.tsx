@@ -12,7 +12,7 @@ export default function OrderChart() {
   const [data, setData] = useState<ChartData[]>([]);
 
   useEffect(() => {
-    fetch("http://localhost:2000/order/chart", {
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/order/chart`, {
       credentials: "include"
     })
       .then((res) => res.json())

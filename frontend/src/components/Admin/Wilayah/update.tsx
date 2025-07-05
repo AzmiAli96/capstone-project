@@ -79,7 +79,7 @@ export default function UpdateWilayahForm({ isOpen, onClose, onUpdateWilayah, wi
             };
 
             const response = await axiosInstance.put(
-                `http://localhost:2000/wilayah/${wilayah.id}`, // pastikan wilayah punya ID
+                `/wilayah/${wilayah.id}`, // pastikan wilayah punya ID
                 updatedWilayah,
                 {
                     headers: { "Content-Type": "application/json" },

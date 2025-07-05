@@ -10,7 +10,7 @@ export const EcommerceMetrics = () => {
   useEffect(() => {
     const fetchCustomerCount = async () => {
       try {
-        const res = await fetch("http://localhost:2000/user/count-customer", {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/count-customer`, {
           credentials: "include", // Kirim cookie secara otomatis
         });
         if (!res.ok) throw new Error("Gagal mengambil jumlah customer");

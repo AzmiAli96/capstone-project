@@ -26,7 +26,7 @@ export default function Wilayah() {
   // get semua data wilayah + search
   const fetchWilayahs = async () => {
     try {
-      const response = await axiosInstance.get("http://localhost:2000/wilayah", {
+      const response = await axiosInstance.get(`/wilayah`, {
         params: {
           search: searchQuery,
           page,
@@ -74,7 +74,7 @@ export default function Wilayah() {
     try {
       const token = localStorage.getItem("token");
 
-      await axiosInstance.delete(`http://localhost:2000/wilayah/${id}`, {
+      await axiosInstance.delete(`/wilayah/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

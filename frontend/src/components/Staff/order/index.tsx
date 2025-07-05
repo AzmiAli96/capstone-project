@@ -36,7 +36,7 @@ export default function Order() {
   // get semua data Order + search
   const fetchOrders = async () => {
     try {
-      const response = await axiosInstance.get("http://localhost:2000/order", {
+      const response = await axiosInstance.get(`/order`, {
         params: {
           search: searchQuery,
           page,
@@ -112,7 +112,7 @@ export default function Order() {
     try {
       const token = localStorage.getItem("token");
 
-      await axiosInstance.delete(`http://localhost:2000/order/${id}`, {
+      await axiosInstance.delete(`/order/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

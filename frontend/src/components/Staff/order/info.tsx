@@ -66,7 +66,7 @@ export default function OrderInfo({ isOpen, onClose, orderId }: OrderInfoProps) 
 
     const fetchOrderById = async () => {
         try {
-            const response = await axiosInstance.get(`http://localhost:2000/order/${orderId}`, {
+            const response = await axiosInstance.get(`/order/${orderId}`, {
                 withCredentials: true,
             });
 
@@ -154,12 +154,12 @@ export default function OrderInfo({ isOpen, onClose, orderId }: OrderInfoProps) 
                         <div className="grid grid-cols-2 items-center gap-4 mt-4">
                             <label className="text-gray-700 dark:text-gray-300">Gambar</label>
                             <a
-                                href={`http://localhost:2000${item.image}`}
+                                href={`${process.env.NEXT_PUBLIC_API_URL}${item.image}`}
                                 target="_blank"
                                 rel="noopener noreferrer"
                             >
                                 <img
-                                    src={`http://localhost:2000${item.image}`}
+                                    src={`${process.env.NEXT_PUBLIC_API_URL}${item.image}`}
                                     alt="Order Image"
                                     className="w-40 h-auto border rounded px-2 py-1 text-gray-900 dark:bg-gray-800 dark:text-white dark:border-gray-700"
                                 />

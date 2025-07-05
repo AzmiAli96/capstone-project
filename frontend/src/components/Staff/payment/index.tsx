@@ -25,7 +25,7 @@ export default function Payment() {
 
   const fetchStatus = async () => {
     try {
-      const response = await axiosInstance.get("http://localhost:2000/status", {
+      const response = await axiosInstance.get("/status", {
         params: {
           search: searchQuery,
           page,

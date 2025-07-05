@@ -66,7 +66,7 @@ export default function StatusInfo({ isOpen, onClose, statusId }: StatusInfoProp
 
     const fetchStatusById = async () => {
         try {
-            const response = await axiosInstance.get(`http://localhost:2000/status/${statusId}`, {
+            const response = await axiosInstance.get(`/status/${statusId}`, {
                 withCredentials: true,
             });
 
@@ -156,12 +156,12 @@ export default function StatusInfo({ isOpen, onClose, statusId }: StatusInfoProp
                         <div className="grid grid-cols-2 items-center gap-4 mt-4">
                             <label className="text-gray-700 dark:text-gray-300">Gambar</label>
                             <a
-                                href={`http://localhost:2000${item.image}`}
+                                href={`${process.env.NEXT_PUBLIC_API_URL}${item.image}`}
                                 target="_blank"
                                 rel="noopener noreferrer"
                             >
                                 <img
-                                    src={`http://localhost:2000${item.image}`}
+                                    src={`${process.env.NEXT_PUBLIC_API_URL}${item.image}`}
                                     alt="Status Image"
                                     className="w-40 h-auto bstatus rounded px-2 py-1 text-gray-900 dark:bg-gray-800 dark:text-white dark:bstatus-gray-700"
                                 />

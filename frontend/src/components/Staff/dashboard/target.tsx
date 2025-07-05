@@ -9,7 +9,7 @@ export default function TargetStatus() {
     useEffect(() => {
         const fetchStatusCount = async () => {
             try {
-                const res = await fetch("http://localhost:2000/status/count", {
+                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/status/count`, {
                     credentials: "include",
                 });
                 const data = await res.json();
