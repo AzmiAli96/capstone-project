@@ -21,7 +21,7 @@ services:
       - PORT=2000
       - JWT_SECRET=iR++LRtav0AYML1GMXz+/XDk85uEnnOVk7QVSJF7TMw
       - CLIENT_URL=https://gemilangcargo.com
-      - NODE_ENV=production
+      - NODE_ENV=development
       - TZ='Asia/Jakarta'
     ports:
       - "2000:2000"
