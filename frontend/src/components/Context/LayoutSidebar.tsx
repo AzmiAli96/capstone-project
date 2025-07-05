@@ -83,7 +83,9 @@ const LayoutSidebar: React.FC = () => {
     useEffect(() => {
         const fetchUser = async () => {
             try {
-                const res = await fetch("/api/getUser");
+                const res = await fetch("/api/getUser", { 
+                    credentials: "include" 
+                });
                 if (res.ok) {
                     const data = await res.json();
                     setUser(data.user);
