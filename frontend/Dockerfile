@@ -8,7 +8,7 @@ RUN npm install
 
 COPY . .
 
-ENV NEXT_PUBLIC_API_URL=http://192.168.221.41:2000/api
+ENV NEXT_PUBLIC_API_URL=https://api.gemilangcargo.com
 
 RUN npm run build
 
