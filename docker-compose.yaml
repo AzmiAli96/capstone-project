@@ -20,7 +20,7 @@ services:
       - DATABASE_URL=postgres://postgres:postgres@db:5432/gemilang_cargo_db
       - PORT=2000
       - JWT_SECREET=iR++LRtav0AYML1GMXz+/XDk85uEnnOVk7QVSJF7TMw
-      - CLIENT_URL=http://localhost:3000
+      - CLIENT_URL=https://gemilangcargo.com
       - NODE_ENV=development
       - TZ='Asia/Jakarta'
     ports:
