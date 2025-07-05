@@ -19,7 +19,7 @@ services:
     environment:
       - DATABASE_URL=postgres://postgres:postgres@db:5432/gemilang_cargo_db
       - PORT=2000
-      - JWT_SECREET=iR++LRtav0AYML1GMXz+/XDk85uEnnOVk7QVSJF7TMw
+      - JWT_SECRET=iR++LRtav0AYML1GMXz+/XDk85uEnnOVk7QVSJF7TMw
       - CLIENT_URL=https://gemilangcargo.com
       - NODE_ENV=development
       - TZ='Asia/Jakarta'
@@ -32,7 +32,7 @@ services:
     depends_on:
       - backend
     environment:
-      - JWT_SECREET=iR++LRtav0AYML1GMXz+/XDk85uEnnOVk7QVSJF7TMw
+      - JWT_SECRET=iR++LRtav0AYML1GMXz+/XDk85uEnnOVk7QVSJF7TMw
       - NEXT_PUBLIC_NODE_ENV=development
       - NEXT_PUBLIC_API_URL=https://api.gemilangcargo.com
       - TZ='Asia/Jakarta'
