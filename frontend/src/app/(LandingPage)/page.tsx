@@ -5,7 +5,7 @@ import { ReactNode } from "react";
 import Blog from "@/components/blog";
 import Header from "@/components/Headers";
 
-export default function RootLayout({ children }: { children: ReactNode }) {
+export default function LandingPage() {
   return (
     <>
       <Header />

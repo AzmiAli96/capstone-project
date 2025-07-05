@@ -9,10 +9,8 @@ import fs from "fs";
 
 
 export const createUser = async (item: userData) => {
-    // cek user dengan email yang sama
     const existingUser = await findUserByEmail(item.email);
     if (existingUser) {
-        // lempar error supaya controller bisa catch
         throw new Error("Email sudah terdaftar");
     }
 

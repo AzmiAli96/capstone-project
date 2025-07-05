@@ -8,7 +8,7 @@ import path from "path";
 const app = express();
 
 // ------------------ Load .env ------------------
-dotenv.config(); // membaca file .env
+dotenv.config();
 
 const PORT = process.env.PORT;
 // -----------------------------------------------
@@ -18,7 +18,7 @@ console.log("Static folder:", path.join(__dirname, '../uploads'));
 
 
 app.use(cors({
-  origin: "http://localhost:3000", // sesuaikan dengan URL Next.js Anda
+  origin: process.env.CLIENT_URL, 
   credentials: true
 }));
 

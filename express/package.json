@@ -8,6 +8,9 @@
         "start": "node --openssl-legacy-provider dist/server.js",
         "build": "tsc --project tsconfig.json && prisma generate"
     },
+    "prisma": {
+        "seed": "ts-node prisma/seed.ts"
+    },
     "keywords": [
         "tugas",
         "ngoding",

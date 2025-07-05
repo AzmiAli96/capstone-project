@@ -1,5 +1,5 @@
 "use client";
-import { Dropdown } from "@/components/ui/dropdown/dropdown";
+import { Dropdown } from "@/components/ui/dropdown/Dropdown";
 import { DropdownItem } from "@/components/ui/dropdown/DropdownItem";
 import Image from "next/image";
 import Link from "next/link";

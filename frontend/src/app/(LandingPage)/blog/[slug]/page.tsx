@@ -1,26 +1,24 @@
-// app/(LandingPage)/blog/[slug]/page.tsx
-import { notFound } from "next/navigation";
+'use client'
+
+import { notFound, useParams, useSearchParams } from "next/navigation";
 import BlogData from "@/components/blog/blogData";
 import Image from "next/image";
 import { Metadata } from "next";
 import { Blog } from "@/types/blog";
 import Link from "next/link";
+import { useEffect } from "react";
 
-export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
-    const slug = params.slug; // still sync, fine for local usage
-    const blog = BlogData.find((b) => b.slug === slug);
 
-    return {
-        title: blog?.title || "Blog Tidak Ditemukan",
-        description: blog?.metadata || "Blog detail page",
-    };
-}
+const BlogDetailPage = () => {
+    const params: any = useParams()
 
-const BlogDetailPage = ({ params }: { params: { slug: string } }) => {
-    const blog: Blog | undefined = BlogData.find((item) => item.slug === params.slug);
+    const blog: Blog | undefined = BlogData.find((item) => item?.slug === params?.slug!);
 
     if (!blog) return notFound();
 
+    useEffect(() => {
+        document.title = blog.title
+    }, [params.slug])
     const categories = Array.from(new Set(BlogData.flatMap(blog => blog.tags || [])));
 
     // Ambil satu blog dari setiap kategori (untuk membuat link ke /blog/[slug])

@@ -2,14 +2,19 @@ import prisma from "../db/prisma";
 import { LaporanData } from "../types/laporan";
 
 export const findLaporanWithStatus = async (search: string, skip: number, take: number) => {
-    let tanggalFilter = undefined;
+    let tanggalFilter: { gte: Date; lt: Date } | undefined = undefined;
 
     // Cek apakah search adalah format tanggal (YYYY-MM-DD)
     if (/^\d{4}-\d{2}-\d{2}$/.test(search)) {
         const parsedDate = new Date(search);
+        parsedDate.setHours(0, 0, 0, 0);
+
+        const nextDay = new Date(parsedDate);
+        nextDay.setDate(nextDay.getDate() + 1);
+
         tanggalFilter = {
-            gte: new Date(parsedDate.setHours(0, 0, 0, 0)),
-            lt: new Date(parsedDate.setHours(24, 0, 0, 0)),
+            gte: parsedDate,
+            lt: nextDay,
         };
     }
 
@@ -25,15 +30,19 @@ export const findLaporanWithStatus = async (search: string, skip: number, take: 
         take,
     });
 };
-
 export const countLaporan = async (search: string) => {
-    let tanggalFilter = undefined;
+    let tanggalFilter: { gte: Date; lt: Date } | undefined = undefined;
 
     if (/^\d{4}-\d{2}-\d{2}$/.test(search)) {
         const parsedDate = new Date(search);
+        parsedDate.setHours(0, 0, 0, 0);
+
+        const nextDay = new Date(parsedDate);
+        nextDay.setDate(nextDay.getDate() + 1);
+
         tanggalFilter = {
-            gte: new Date(parsedDate.setHours(0, 0, 0, 0)),
-            lt: new Date(parsedDate.setHours(24, 0, 0, 0)),
+            gte: parsedDate,
+            lt: nextDay,
         };
     }
 
@@ -43,6 +52,7 @@ export const countLaporan = async (search: string) => {
         },
     });
 };
+
 
 
 
@@ -136,7 +146,7 @@ export const findStatusForLaporanByTanggal = async (tanggal: string, userId: num
                     ongkos: true,
                 },
             },
-            laporan: true, // kalau ingin menampilkan data laporan jika ada
+            laporan: true,
         },
         orderBy: {
             tanggal: "asc",

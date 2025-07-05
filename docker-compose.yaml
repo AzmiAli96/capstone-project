@@ -1,0 +1,42 @@
+services:
+  db:
+    image: postgres:15.12-alpine3.21
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: gemilang_cargo_db
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+  
+  backend:
+    build: ./express
+    restart: no
+    depends_on:
+      - db
+    environment:
+      - DATABASE_URL=postgres://postgres:postgres@db:5432/gemilang_cargo_db
+      - PORT=2000
+      - JWT_SECREET=iR++LRtav0AYML1GMXz+/XDk85uEnnOVk7QVSJF7TMw
+      - CLIENT_URL=http://localhost:3000
+      - NODE_ENV=development
+      - TZ='Asia/Jakarta'
+    ports:
+      - "2000:2000"
+  
+  frontend:
+    build: ./frontend
+    restart: no
+    depends_on:
+      - backend
+    environment:
+      - JWT_SECREET=iR++LRtav0AYML1GMXz+/XDk85uEnnOVk7QVSJF7TMw
+      - NEXT_PUBLIC_NODE_ENV=development
+      - TZ='Asia/Jakarta'
+    ports:
+      - "3000:3000"
+
+volumes:
+  postgres-data:

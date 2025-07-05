@@ -162,7 +162,7 @@ export default function User() {
                         className="bg-green-600 hover:bg-blue-700 text-white hover:underline py-1 px-3 rounded"
                         onClick={() => handleEditClick(item)}
                       >
-                        <SquarePenIcon/>
+                        <SquarePenIcon size={18}/>
                       </button>
                       <button
                         className="ml-2 bg-red-600 text-white text-white py-1 px-3 rounded hover:underline"
@@ -172,7 +172,7 @@ export default function User() {
                           }
                         }}
                       >
-                        <Trash2/>
+                        <Trash2 size={18}/>
                       </button>
                     </TableCell>
                   </TableRow>

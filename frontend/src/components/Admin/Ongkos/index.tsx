@@ -6,6 +6,7 @@ import Toast from "@/components/Toast";
 import axiosInstance from "@/lib/axiosInstance";
 import InputCostForm from "./input";
 import UpdateCostForm from "./update";
+import { SquarePen, Trash2 } from "lucide-react";
 
 export default function Cost() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -152,7 +153,7 @@ export default function Cost() {
                         className="bg-green-600 hover:bg-blue-700 text-white hover:underline py-1 px-3 rounded"
                         onClick={() => handleEditClick(item)}
                       >
-                        Edit
+                        <SquarePen size={18}/>
                       </button>
                       <button
                         className="ml-2 bg-red-600 text-white text-white py-1 px-3 rounded hover:underline"
@@ -162,7 +163,7 @@ export default function Cost() {
                           }
                         }}
                       >
-                        Hapus
+                        <Trash2 size={18}/>
                       </button>
                     </TableCell>
                   </TableRow>

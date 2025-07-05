@@ -166,6 +166,16 @@ export default function Payment() {
                         </div>
 
                         {/* Table */}
+                        {Array.isArray(items) && items.some(item => item.spembayaran === "Belum dibayar") && (
+                            <div className="p-2">
+                                <div className="mb-3 text-xs md:text-base font-medium text-gray-700 dark:text-gray-200">
+                                    Silakan lakukan pembayaran ke rekening berikut:
+                                </div>
+                                <div className="mb-2 text-sm font-semibold text-gray-800 dark:text-white">
+                                    BRI: 
+                                </div>
+                            </div>
+                        )}
                         <div className="overflow-hidden rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 shadow-md dark:shadow-gray-900/70">
                             <div className="max-w-full overflow-x-auto">
                                 <div className="min-w-[1100px]">

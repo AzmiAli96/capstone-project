@@ -158,7 +158,7 @@ export default function Wilayah() {
                         className="bg-green-600 hover:bg-blue-700 text-white hover:underline py-1 px-3 rounded"
                         onClick={() => handleEditClick(item)}
                       >
-                        <SquarePen/>
+                        <SquarePen size={18}/>
                       </button>
                       <button
                         className="ml-2 bg-red-600 text-white text-white py-1 px-3 rounded hover:underline"
@@ -168,7 +168,7 @@ export default function Wilayah() {
                           }
                         }}
                       >
-                        <Trash2/>
+                        <Trash2 size={18}/>
                       </button>
                     </TableCell>
                   </TableRow>

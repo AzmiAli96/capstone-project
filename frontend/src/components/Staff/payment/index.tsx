@@ -153,7 +153,7 @@ export default function Payment() {
                   >
                     <TableCell>{index + 1}</TableCell>
                     <TableCell>{item.pengiriman?.no_spb ? item.pengiriman?.no_spb : "Customer"}</TableCell>
-                    <TableCell>{item.pengiriman?.user?.role === "staff" ? item.pengiriman?.customer : item.pengiriman?.user?.name || "-"}</TableCell>
+                    <TableCell>{item.pengiriman?.customer}</TableCell>
                     <TableCell>
                       <Badge color={getStatusColor(item.spengiriman)} variant="light">
                         {item.spengiriman}

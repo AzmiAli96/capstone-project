@@ -345,32 +345,6 @@ export default function OrderForm() {
             </div>
 
             <div className="grid grid-cols-2 items-start gap-4">
-              <label className="text-gray-700 dark:text-gray-300">Pembayaran</label>
-              <div className="flex flex-col gap-1">
-                <label className="flex items-center gap-2">
-                  <input
-                    type="radio"
-                    name="pembayaran"
-                    value="kredit"
-                    checked={pembayaran === "kredit"}
-                    onChange={() => setPembayaran("kredit")}
-                  />
-                  Kredit
-                </label>
-                <label className="flex items-center gap-2">
-                  <input
-                    type="radio"
-                    name="pembayaran"
-                    value="debit"
-                    checked={pembayaran === "debit"}
-                    onChange={() => setPembayaran("debit")}
-                  />
-                  Debit
-                </label>
-              </div>
-            </div>
-
-            <div className="grid grid-cols-2 items-start gap-4">
               <label className="text-gray-700 dark:text-gray-300">Keterangan</label>
               <textarea
                 rows={3}

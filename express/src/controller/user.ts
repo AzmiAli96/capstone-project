@@ -16,7 +16,6 @@ export const RegisterController = async (req: Request, res: Response) => {
       message: "Register Success",
     });
   } catch (error: any) {
-    // Jika error message "Email sudah terdaftar", kembalikan status 409
     if (error.message === "Email sudah terdaftar") {
       return res.status(409).json({ message: error.message });
     }
@@ -24,13 +23,12 @@ export const RegisterController = async (req: Request, res: Response) => {
   }
 };
 
-// jangan lupa ubah ke use kalau udah ada middleware
+
 export const LoginController = async (req: Request, res: Response) => {
   try {
     const item = req.body;
     const { user, token } = await useUser(item);
 
-    // Mengirim token sebagai HTTP-only cookie
     res.cookie("token", token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",

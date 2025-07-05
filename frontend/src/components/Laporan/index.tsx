@@ -5,7 +5,7 @@ import { MagnifyingGlassCircleIcon } from "@heroicons/react/24/outline";
 import Toast from "@/components/Toast";
 import axiosInstance from "@/lib/axiosInstance";
 import LaporanForm from "./input";
-import { Recycle, RefreshCw, Trash2 } from "lucide-react";
+import { PenBox, Recycle, RefreshCw, Trash2 } from "lucide-react";
 import ExportLaporanModal from "./export";
 
 export default function Laporan() {
@@ -170,7 +170,7 @@ export default function Laporan() {
                                                 className="bg-green-600 hover:bg-blue-700 text-white hover:underline py-1 px-3 rounded"
                                                 onClick={() => { setSelectedLaporan(item); openEditModal(); }}
                                             >
-                                                <RefreshCw size={20} />
+                                                <PenBox size={18} />
                                             </button>
                                             <button
                                                 className="ml-2 bg-red-600 text-white text-white py-1 px-3 rounded hover:underline"
@@ -180,7 +180,7 @@ export default function Laporan() {
                                                     }
                                                 }}
                                             >
-                                                <Trash2 size={20} />
+                                                <Trash2 size={18} />
                                             </button>
                                         </TableCell>
                                     </TableRow>
