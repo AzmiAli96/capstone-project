@@ -33,6 +33,7 @@ export const LoginController = async (req: Request, res: Response) => {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "none",
+      domain: "gemilangcargo.com",
       maxAge: 60 * 60 * 1000,
     });
 
