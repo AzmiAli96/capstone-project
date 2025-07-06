@@ -76,7 +76,8 @@ export const deleteUserById = async (itemId: number) => {
     return user;
 }
 
-const uploadPath = path.join(process.cwd(), "uploads/users");
+const rootPath = path.resolve(__dirname, "../../");
+const uploadPath = path.join(rootPath, "uploads/users");
 
 if (!fs.existsSync(uploadPath)) {
     fs.mkdirSync(uploadPath, { recursive: true });

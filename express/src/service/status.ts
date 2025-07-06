@@ -5,6 +5,7 @@ import path from "path";
 import fs from "fs";
 
 
+
 export const getAllstatus = async (search: string, page: number, perPage: number, userId: number | null) => {
     const skip = (page - 1) * perPage;
     const [data, total] = await Promise.all([
@@ -33,7 +34,8 @@ export const updateStatusById = async (itemId: number, item: statusData) => {
     return status;
 }
 
-const uploadPath = path.join(process.cwd(), "uploads/pembayaran");
+const rootPath = path.resolve(__dirname, "../../");
+const uploadPath = path.join(rootPath, "uploads/pembayaran");
 
 if (!fs.existsSync(uploadPath)) {
     fs.mkdirSync(uploadPath, { recursive: true });
