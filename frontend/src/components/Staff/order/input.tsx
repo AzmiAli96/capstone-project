@@ -258,7 +258,7 @@ export default function OrderForm({
         formData.append("id", orderId.toString());
 
         try {
-            const response = await fetch("${process.env.NEXT_PUBLIC_API_URL}/order/upload", {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/order/upload`, {
                 method: "POST",
                 body: formData,
             });

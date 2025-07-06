@@ -137,7 +137,7 @@ export default function Cost() {
               <TableHeader className="bg-gray-100 dark:bg-gray-800">
                 <TableRow>
                   <TableCell isHeader>No</TableCell>
-                  <TableCell isHeader>Cost</TableCell>
+                  <TableCell isHeader>Jemput</TableCell>
                   <TableCell isHeader>Harga</TableCell>
                   <TableCell isHeader>Action</TableCell>
                 </TableRow>

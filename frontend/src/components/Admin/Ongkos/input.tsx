@@ -86,7 +86,7 @@ export default function InputCostForm({ isOpen, onClose, onAddCost, }: { isOpen:
         <Modal isOpen={isOpen} onClose={onClose}>
             <form className="grid grid-cols-1 gap-4" onSubmit={handleSubmit}>
                 <div className="grid grid-cols-2 items-center gap-4">
-                    <label className="text-gray-700 dark:text-gray-300">Cost</label>
+                    <label className="text-gray-700 dark:text-gray-300">Jemput</label>
                     <input
                         type="text"
                         value={jemput}

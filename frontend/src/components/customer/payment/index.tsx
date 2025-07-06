@@ -172,7 +172,7 @@ export default function Payment() {
                                     Silakan lakukan pembayaran ke rekening berikut:
                                 </div>
                                 <div className="mb-2 text-sm font-semibold text-gray-800 dark:text-white">
-                                    BRI: 
+                                    BCA: 8125068924 a.n. Novi Armi
                                 </div>
                             </div>
                         )}
