@@ -12,6 +12,8 @@ COPY . .
 
 RUN npm run build
 
+RUN mkdir -p uploads
+
 EXPOSE 2000
 
 CMD [ "node", "dist/src/server.js" ]

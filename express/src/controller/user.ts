@@ -28,14 +28,17 @@ export const LoginController = async (req: Request, res: Response) => {
   try {
     const item = req.body;
     const { user, token } = await useUser(item);
-
-    res.cookie("token", token, {
+    const isProduction = process.env.NODE_ENV === "production";
+    const cookieOptions: any = {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "none",
-      domain: "gemilangcargo.com",
+      secure: isProduction,
+      sameSite:isProduction ? "none" : "strict", // Use 'none' for production to allow cross-site cookies
       maxAge: 60 * 60 * 1000,
-    });
+    };
+    if (isProduction) {
+      cookieOptions.domain = "gemilangcargo.com";
+    }
+    res.cookie("token", token, cookieOptions);
 
     res.status(200).json({
       user,
