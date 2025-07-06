@@ -15,7 +15,7 @@ const DashboardMenu = () => {
     useEffect(() => {
         const fetchUser = async () => {
             try {
-                const res = await fetch("/api/getUser");
+                const res = await fetch("/api/getUser" , { credentials: "include" });
                 const data = await res.json();
                 const imagePath = data?.user?.image;
                 if (imagePath) {

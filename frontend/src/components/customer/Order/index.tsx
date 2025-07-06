@@ -55,7 +55,7 @@ export default function OrderForm() {
   useEffect(() => {
     const fetchCurrentUser = async () => {
       try {
-        const res = await fetch("/api/getUser");
+        const res = await fetch("/api/getUser", { credentials: "include" });
         const data = await res.json();
         if (data?.user?.id) {
           setCurrentUserId(data.user.id);

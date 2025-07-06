@@ -46,7 +46,7 @@ export default function Payment() {
     useEffect(() => {
         const fetchUserAndStatus = async () => {
             try {
-                const res = await axios.get("/api/getUser");
+                const res = await axios.get("/api/getUser", { withCredentials: true });
                 const uid = res.data.user.id;
                 setUserId(uid);
                 await fetchStatus(uid);
