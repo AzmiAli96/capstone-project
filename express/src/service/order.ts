@@ -3,6 +3,8 @@ import { countAllOrder, countOrder, countOrderPerMonth, deleteOrder, editOrder, 
 import { orderData } from "../types/order";
 import path from "path";
 import fs from "fs";
+const rootPath = path.resolve(__dirname, "../../"); // naik 2 folder dari dist/
+const uploadPath = path.join(rootPath, "uploads/order");
 
 export const getAllOrder = async (search: string, page: number, perPage: number) => {
     const skip = (page - 1) * perPage;
@@ -40,8 +42,6 @@ export const deleteOrderById = async (itemId: number) => {
     const order = await deleteOrder(itemId);
     return order;
 }
-
-const uploadPath = path.join(process.cwd(), "uploads/order");
 
 if (!fs.existsSync(uploadPath)) {
     fs.mkdirSync(uploadPath, { recursive: true });
