@@ -12,7 +12,7 @@ COPY . .
 
 RUN npm run build
 
-RUN mkdir -p uploads
+RUN mkdir -p dist/uploads
 
 EXPOSE 2000
 
