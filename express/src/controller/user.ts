@@ -32,7 +32,7 @@ export const LoginController = async (req: Request, res: Response) => {
     const cookieOptions: any = {
       httpOnly: true,
       secure: isProduction,
-      sameSite:isProduction ? "none" : "strict", // Use 'none' for production to allow cross-site cookies
+      sameSite:isProduction ? "none" : "strict", 
       maxAge: 60 * 60 * 1000,
     };
     if (isProduction) {
@@ -105,6 +105,21 @@ export const getUserByIdController = async (req: Request, res: Response) => {
     res.send(user);
   } catch (error: any) {
     res.status(400).send(error.message);
+  }
+};
+
+export const getUserProfileController = async (req: Request, res: Response) => {
+  try {
+    const userData = (req as any).userData; 
+    const user = await getUserById(Number(userData.id));
+
+    if (!user) {
+      return res.status(404).json({ message: "User tidak ditemukan" });
+    }
+
+    res.json(user);
+  } catch (error: any) {
+    res.status(500).json({ message: "Terjadi kesalahan saat mengambil data user" });
   }
 };
 

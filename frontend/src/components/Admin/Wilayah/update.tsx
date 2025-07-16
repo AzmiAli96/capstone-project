@@ -79,14 +79,14 @@ export default function UpdateWilayahForm({ isOpen, onClose, onUpdateWilayah, wi
             };
 
             const response = await axiosInstance.put(
-                `/wilayah/${wilayah.id}`, // pastikan wilayah punya ID
+                `/wilayah/${wilayah.id}`, 
                 updatedWilayah,
                 {
                     headers: { "Content-Type": "application/json" },
                 }
             );
 
-            onUpdateWilayah(response.data); // callback untuk update list
+            onUpdateWilayah(response.data); 
             onClose();
         } catch (error) {
             console.error("Gagal mengupdate wilayah", error);

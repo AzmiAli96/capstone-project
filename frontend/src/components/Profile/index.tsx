@@ -19,7 +19,6 @@ export default function Profile() {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [toast, setToast] = useState<{ type: "success" | "error" | "warning"; message: string } | null>(null);
 
-  // Ambil data user dari API Next.js
   useEffect(() => {
     const fetchUser = async () => {
       try {

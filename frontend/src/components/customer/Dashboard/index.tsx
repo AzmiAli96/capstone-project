@@ -15,9 +15,15 @@ const DashboardMenu = () => {
     useEffect(() => {
         const fetchUser = async () => {
             try {
-                const res = await fetch("/api/getUser" , { credentials: "include" });
+                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/profile`, {
+                    credentials: "include",
+                });
+
+                if (!res.ok) throw new Error("Gagal mengambil user");
+
                 const data = await res.json();
-                const imagePath = data?.user?.image;
+                const imagePath = data?.image;
+
                 if (imagePath) {
                     setUserImage(`${process.env.NEXT_PUBLIC_API_URL}${imagePath}`);
                 }
@@ -28,6 +34,7 @@ const DashboardMenu = () => {
 
         fetchUser();
     }, []);
+
 
     const menuItems = [
         {
@@ -60,7 +67,7 @@ const DashboardMenu = () => {
         <div className="relative w-full min-h-screen">
             <div className="absolute inset-0 -z-10">
                 <img
-                    src="/images/ilustrasi.jpg" 
+                    src="/images/ilustrasi.jpg"
                     alt="Background"
                     className="w-full h-full object-cover"
                 />

@@ -69,7 +69,7 @@ export default function Wilayah() {
 
   // Delete
   const handleDelete = async (id: number) => {
-    console.log("Menghapus wilayah dengan ID:", id); // Debug
+    console.log("Menghapus wilayah dengan ID:", id); 
 
     try {
       const token = localStorage.getItem("token");

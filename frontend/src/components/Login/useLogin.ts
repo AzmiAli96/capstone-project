@@ -18,12 +18,12 @@ export const useLogin = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        credentials: "include", // ⬅️ WAJIB supaya cookie dikirim ke browser
+        credentials: "include", 
         body: JSON.stringify({ email, password }),
       });
 
       if (response.ok) {
-        const result = await response.json(); // ← TAMBAHKAN INI!
+        const result = await response.json(); 
 
         const role = result.user.role;
 

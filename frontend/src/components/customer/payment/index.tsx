@@ -136,7 +136,7 @@ export default function Payment() {
                 <div className="relative z-10 min-h-screen flex items-center justify-center py-10 px-4">
                     <div className="bg-white p-8 rounded shadow-md w-full max-w-7xl">
                         <div className="flex justify-between items-center mb-6">
-                            <h2 className="text-2xl font-bold">Order</h2>
+                            <h2 className="text-2xl font-bold">Pembayaran / Status</h2>
                             <Link href="/dashboard">
                                 <button className="border border-gray-400 rounded-full px-4 py-1 hover:bg-gray-100">
                                     Back
