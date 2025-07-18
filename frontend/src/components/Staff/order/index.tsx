@@ -176,6 +176,7 @@ export default function Order() {
           onAddOrder={(order: any) => {
             setItems((prev) => [...prev, order]);
             setToast({ type: "success", message: "Order berhasil ditambahkan." });
+            fetchOrders();
           }}
         />
       </div>
@@ -311,6 +312,7 @@ export default function Order() {
             prev.map((item) => (item.id === updatedOrder.id ? updatedOrder : item))
           );
           setToast({ type: "success", message: "Order berhasil diupdate." });
+          fetchOrders();
         }}
       />
       {/* <UpdateOrderForm

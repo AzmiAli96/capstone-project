@@ -62,6 +62,7 @@ export default function Payment() {
   const handleUpdateStatus = (updatedStatus: any) => {
     setItems((prev) => prev.map((u) => (u.id === updatedStatus.id ? updatedStatus : u)));
     setToast({ type: "success", message: "Status berhasil diupdate." });
+    fetchStatus();
   };
 
   // info

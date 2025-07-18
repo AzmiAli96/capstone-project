@@ -63,6 +63,7 @@ export default function Cost() {
   const handleUpdateCost = (updatedCost: any) => {
     setItems((prev) => prev.map((u) => (u.id === updatedCost.id ? updatedCost : u)));
     setToast({ type: "success", message: "Cost berhasil diupdate." });
+    fetchCosts();
   };
 
   const closeToast = () => setToast(null);
@@ -125,6 +126,7 @@ export default function Cost() {
           onAddCost={(cost: any) => {
             setItems((prev) => [...prev, cost]);
             setToast({ type: "success", message: "Cost berhasil ditambahkan." });
+            fetchCosts();
           }}
         />
       </div>

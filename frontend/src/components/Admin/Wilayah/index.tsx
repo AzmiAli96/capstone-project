@@ -63,6 +63,7 @@ export default function Wilayah() {
   const handleUpdateWilayah = (updatedWilayah: any) => {
     setItems((prev) => prev.map((u) => (u.id === updatedWilayah.id ? updatedWilayah : u)));
     setToast({ type: "success", message: "Wilayah berhasil diupdate." });
+    fetchWilayahs();
   };
 
   const closeToast = () => setToast(null);
@@ -125,6 +126,7 @@ export default function Wilayah() {
           onAddWilayah={(wilayah: any) => {
             setItems((prev) => [...prev, wilayah]);
             setToast({ type: "success", message: "Wilayah berhasil ditambahkan." });
+            fetchWilayahs();
           }}
         />
       </div>
@@ -152,7 +154,7 @@ export default function Wilayah() {
                     <TableCell>{index + 1}</TableCell>
                     <TableCell>{item.provinsi}</TableCell>
                     <TableCell>{item.wilayah}</TableCell>
-                    <TableCell>{item.harga}</TableCell>
+                    <TableCell>Rp {new Intl.NumberFormat('id-ID').format(item.harga)}</TableCell>
                     <TableCell>
                       <button
                         className="bg-green-600 hover:bg-blue-700 text-white hover:underline py-1 px-3 rounded"

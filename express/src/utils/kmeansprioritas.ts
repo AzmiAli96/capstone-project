@@ -8,7 +8,6 @@ export const calculateKMeansPriority = async (item: {
     id_wilayah: number;
     id_ongkos: number | null;
 }) => {
-    // Ambil data historis pengiriman
     const pengirimanData = await prisma.pengiriman.findMany({
         select: {
             berat: true,
@@ -18,28 +17,22 @@ export const calculateKMeansPriority = async (item: {
         },
     });
 
-    // Buat dataset numerik
     const dataset: number[][] = pengirimanData.map((p) => [
         p.berat,
         p.id_wilayah,
         p.id_ongkos ?? -1, // Gunakan -1 jika null
     ]);
 
-    // Jumlah cluster (Tinggi, Sedang, Rendah)
     const k = 3;
 
-    // Pastikan data cukup
     if (dataset.length < k) {
         throw new Error(`Jumlah data pengiriman kurang dari jumlah cluster (${k}).`);
     }
 
-    // Ambil nilai total untuk referensi evaluasi
     const totalList: number[] = pengirimanData.map((p) => Number(p.total));
 
-    // Jalankan algoritma K-Means
     const kmeansResult = kmeans(dataset, k);
 
-    // Validasi hasil
     if (!kmeansResult.centroids || kmeansResult.centroids.length === 0) {
         throw new Error("KMeans gagal menghasilkan centroid.");
     }
@@ -47,14 +40,11 @@ export const calculateKMeansPriority = async (item: {
         throw new Error("Jumlah cluster dan data total tidak cocok.");
     }
 
-    // Buat data baru dari pengiriman yang akan diprediksi
     const newData = [item.berat, item.id_wilayah, item.id_ongkos ?? -1];
 
-    // Fungsi untuk menghitung jarak Euclidean
     const euclideanDistance = (a: number[], b: number[]) =>
         Math.sqrt(a.reduce((sum, val, i) => sum + Math.pow(val - b[i], 2), 0));
 
-    // Prediksi cluster untuk data baru
     let predictedCluster = 0;
     let minDistance = Infinity;
     kmeansResult.centroids.forEach((c: any, idx: number) => {
@@ -66,7 +56,6 @@ export const calculateKMeansPriority = async (item: {
         }
     });
 
-    // Hitung rata-rata total per cluster
     const clusterAverages = Array(k)
         .fill(0)
         .map((_, clusterId) => {
@@ -80,10 +69,8 @@ export const calculateKMeansPriority = async (item: {
             return { clusterId, average: avg };
         });
 
-    // Urutkan cluster dari total tertinggi ke terendah
     clusterAverages.sort((a, b) => b.average - a.average);
 
-    // Mapping cluster ke prioritas
     const clusterToPriority = new Map<number, string>();
     clusterAverages.forEach((c, idx) => {
         if (idx === 0) clusterToPriority.set(c.clusterId, "Tinggi");
@@ -91,10 +78,8 @@ export const calculateKMeansPriority = async (item: {
         else clusterToPriority.set(c.clusterId, "Rendah");
     });
 
-    // Ambil hasil akhir
     const prioritas = clusterToPriority.get(predictedCluster) || "Rendah";
 
-    // Rekomendasi total untuk cluster ini (rata-rata)
     const avgClusterTotal =
         totalList.filter((_, i) => kmeansResult.clusters[i] === predictedCluster)
             .reduce((a, b) => a + b, 0) /

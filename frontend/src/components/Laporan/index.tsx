@@ -132,6 +132,7 @@ export default function Laporan() {
                     onAddLaporan={(laporan: any) => {
                         setItems((prev) => [...prev, laporan]);
                         setToast({ type: "success", message: "Laporan berhasil ditambahkan." });
+                        fetchLaporan();
                     }}
                 />
             </div>
@@ -246,6 +247,7 @@ export default function Laporan() {
                         prev.map((item) => (item.id === updatedLaporan.id ? updatedLaporan : item))
                     );
                     setToast({ type: "success", message: "Laporan berhasil diupdate." });
+                    fetchLaporan();
                 }}
             />
             {toast && (

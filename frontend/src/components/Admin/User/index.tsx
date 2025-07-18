@@ -63,6 +63,7 @@ export default function User() {
   const handleUpdateUser = (updatedUser: any) => {
     setItems((prev) => prev.map((u) => (u.id === updatedUser.id ? updatedUser : u)));
     setToast({ type: "success", message: "User berhasil diupdate." });
+    fetchUsers();
   };
 
   const closeToast = () => setToast(null);
@@ -125,6 +126,7 @@ export default function User() {
           onAddUser={(user: any) => {
             setItems((prev) => [...prev, user]);
             setToast({ type: "success", message: "User berhasil ditambahkan." });
+            fetchUsers();
           }}
         />
       </div>
